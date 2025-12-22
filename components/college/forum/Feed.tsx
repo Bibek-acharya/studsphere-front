@@ -77,9 +77,9 @@ const Feed: React.FC<FeedProps> = ({ openPostModal, addToast }) => {
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-4 flex items-start gap-4 shadow-sm relative overflow-hidden transition-all hover:shadow-md">
+      <div className="bg-linear-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-4 flex items-start gap-4 shadow-sm relative overflow-hidden transition-all hover:shadow-md">
         <div className="absolute top-0 right-0 bg-blue-100 text-primary font-bold text-[10px] px-2 py-1 rounded-bl-lg">PINNED</div>
-        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary shadow-sm border border-blue-100 flex-shrink-0">
+        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary shadow-sm border border-blue-100 shrink-0">
             <i className="ph-fill ph-megaphone text-xl animate-pulse"></i>
         </div>
         <div>
