@@ -12,7 +12,7 @@ import {  ResourceType } from '@/components/college/resources/types';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ResourceType>('all');
-  const [ setFilters] = useState({
+  const [filters, setFilters] = useState({
     university: '',
     level: '',
     faculty: '',
