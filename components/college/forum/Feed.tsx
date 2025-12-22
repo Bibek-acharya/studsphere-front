@@ -1,11 +1,11 @@
 
 import React, { useState } from 'react';
 import PostCard from './PostCard';
-import { Post } from '../types';
+import { Post } from './types';
 
 interface FeedProps {
   openPostModal: () => void;
-  addToast: (msg: string, type?: any) => void;
+  addToast: (msg: string, type?: unknown) => void;
 }
 
 const INITIAL_POSTS: Post[] = [
@@ -37,7 +37,7 @@ const INITIAL_POSTS: Post[] = [
 ];
 
 const Feed: React.FC<FeedProps> = ({ openPostModal, addToast }) => {
-  const [posts, setPosts] = useState(INITIAL_POSTS);
+  const [posts] = useState(INITIAL_POSTS);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
