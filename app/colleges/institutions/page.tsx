@@ -1,4 +1,3 @@
-import Navbar from "@/components/college/institutions/navbar"
 import HeroSection from "@/components/college/institutions/hero-section"
 import PartnersSection from "@/components/college/institutions/partners-sections"
 import WhyTrustSection from "@/components/college/institutions/why-trust-section"
@@ -12,7 +11,6 @@ import ContactSection from "@/components/college/institutions/contact-section"
 export default function Page() {
   return (
     <div className="min-h-screen">
-      <Navbar />
       <HeroSection />
       <PartnersSection />
       <WhyTrustSection />

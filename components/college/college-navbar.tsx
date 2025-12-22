@@ -30,7 +30,7 @@ const CollegeNavbar = () => {
           {/* Logo - Responsive sizing - Only show when scrolled */}
           <div
             className={`shrink-0 transition-all duration-300 ease-in-out overflow-hidden ${
-              isScrolled ? "w-[180px] opacity-100" : "w-0 opacity-0"
+              isScrolled ? "w-45 opacity-100" : "w-0 opacity-0"
             }`}
           >
             <Link
@@ -65,7 +65,7 @@ const CollegeNavbar = () => {
               </button>
               {isExploreOpen && (
                 <div
-                  className="absolute left-0 mt-2 w-[540px] bg-white border border-gray-200 rounded-2xl shadow-xl z-50 flex p-6 gap-8"
+                  className="absolute left-0 mt-2 w-135 bg-white border border-gray-200 rounded-2xl shadow-xl z-50 flex p-6 gap-8"
                   onMouseDown={(e) => e.preventDefault()}
                 >
                   {/* OUR TOOLSET */}
@@ -418,7 +418,7 @@ const CollegeNavbar = () => {
               </button>
               {isMoreOpen && (
                 <div
-                  className="absolute left-0 mt-2 w-[220px] bg-white border border-gray-200 rounded-2xl shadow-xl z-50 p-2"
+                  className="absolute left-0 mt-2 w-55 bg-white border border-gray-200 rounded-2xl shadow-xl z-50 p-2"
                   onMouseDown={(e) => e.preventDefault()}
                 >
                   <ul className="space-y-1">
