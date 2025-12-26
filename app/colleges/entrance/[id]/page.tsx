@@ -6,6 +6,179 @@ import { useParams } from "next/navigation";
 
 // Sample entrance exam data (in production, fetch from API)
 const entranceData: { [key: string]: any } = {
+  "exam-0": {
+    title: "MBBS Entrance Examination 2024",
+    shortTitle: "MBBS Entrance",
+    board: "Institute of Medicine, Tribhuvan University",
+    location: "Maharajgunj, Kathmandu",
+    badges: ["Medical Entrance", "Ongoing"],
+    examDate: "Oct 01, 2026",
+    formStart: "Bhadra 01, 2082 (Aug 16, 2025)",
+    formEnd: "Bhadra 20, 2082 (Sep 5, 2025)",
+    noticeDate: "Shrawan 28, 2082 (Aug 13, 2025)",
+    overview:
+      "The MBBS Entrance Examination is conducted by the Institute of Medicine for admission to Bachelor of Medicine and Bachelor of Surgery (MBBS) programs. This highly competitive exam evaluates students' knowledge in Biology, Chemistry, Physics, and English.",
+    eligibility: [
+      "Must have passed +2 or equivalent with Biology as a major subject.",
+      "Minimum GPA of 2.4 (50%) in aggregate and C grade in each science subject.",
+      "Age limit: Not more than 25 years (relaxation for reserved categories).",
+    ],
+    examPattern: {
+      subjects: [
+        "Biology (40 marks)",
+        "Chemistry (30 marks)",
+        "Physics (20 marks)",
+        "English (10 marks)",
+      ],
+      duration: "2 Hours",
+      assessment: "100 MCQs",
+    },
+    applicationSteps: [
+      {
+        title: "Online Registration",
+        description:
+          "Visit the official IOM website and create an account with valid email and mobile number. Complete the registration form with accurate personal details.",
+      },
+      {
+        title: "Fill Application Form",
+        description:
+          "Log in and fill the entrance application form. Upload scanned copies of required documents including citizenship, +2 marksheet, and passport-size photo.",
+      },
+      {
+        title: "Pay Examination Fee",
+        description:
+          "Fee: Rs. 2,500. Payment can be made through bank deposit, eSewa, Khalti, or online banking.",
+      },
+      {
+        title: "Download Admit Card",
+        description:
+          "Admit cards will be available 1 week before the exam. Download and print 2 copies. Verify all details carefully.",
+      },
+    ],
+    quickSummary: {
+      examName: "MBBS Entrance",
+      eligibility: "+2 Science (Bio)",
+      frequency: "Once a Year",
+      website: "iom.edu.np",
+    },
+    notices: [
+      {
+        id: 1,
+        title: "MBBS Entrance 2024 - Application Form Notice",
+        source: "Institute of Medicine",
+        date: "Aug 13, 2025",
+        official: true,
+      },
+      {
+        id: 2,
+        title: "Syllabus and Model Questions Released",
+        source: "IOM Dean Office",
+        date: "Aug 5, 2025",
+        official: true,
+      },
+    ],
+    faqs: [
+      {
+        question: "Can I appear for the exam without Biology in +2?",
+        answer:
+          "No, Biology as a major subject in +2 is mandatory for MBBS entrance examination. Students from other streams are not eligible.",
+      },
+      {
+        question: "Is negative marking applicable in MBBS entrance?",
+        answer:
+          "No, there is no negative marking. Each correct answer carries 1 mark, and wrong answers do not deduct any marks.",
+      },
+      {
+        question: "How many seats are available?",
+        answer:
+          "The number of seats varies each year. Generally, there are around 450-500 MBBS seats available across various government and private medical colleges under IOM.",
+      },
+    ],
+  },
+  "exam-1": {
+    title: "B.E. Civil Entrance Examination 2024",
+    shortTitle: "BE Civil Entrance",
+    board: "Institute of Engineering, Tribhuvan University",
+    location: "Pulchowk, Lalitpur",
+    badges: ["Engineering Entrance", "Closed"],
+    examDate: "Oct 01, 2026",
+    formStart: "Jestha 01, 2081 (May 14, 2024)",
+    formEnd: "Jestha 20, 2081 (June 3, 2024)",
+    noticeDate: "Baishakh 28, 2081 (May 11, 2024)",
+    overview:
+      "The IOE Entrance Examination is conducted annually for admission to BE programs including Civil Engineering at various constituent and affiliated campuses under Tribhuvan University.",
+    eligibility: [
+      "Must have passed +2 or equivalent with Physics, Chemistry, and Mathematics.",
+      "Minimum GPA of 2.4 (45%) in aggregate and C grade in each subject.",
+      "Must be below 27 years of age (31 for reserved categories).",
+    ],
+    examPattern: {
+      subjects: [
+        "Physics (30 marks)",
+        "Chemistry (30 marks)",
+        "Mathematics (30 marks)",
+        "English (10 marks)",
+      ],
+      duration: "2 Hours",
+      assessment: "100 MCQs",
+    },
+    applicationSteps: [
+      {
+        title: "Online Registration",
+        description:
+          "Visit the official IOE website and create an account. Complete registration with valid documents.",
+      },
+      {
+        title: "Fill Application Form",
+        description:
+          "Log in and fill the entrance application form with accurate details and upload required documents.",
+      },
+      {
+        title: "Pay Examination Fee",
+        description:
+          "Fee: Rs. 2,000 (General) | Rs. 1,000 (Reserved). Pay via bank, eSewa, or Khalti.",
+      },
+      {
+        title: "Download Admit Card",
+        description:
+          "Admit cards will be available 1 week before the exam. Download and verify all details.",
+      },
+    ],
+    quickSummary: {
+      examName: "BE Civil Entrance",
+      eligibility: "+2 Science (PCM)",
+      frequency: "Once a Year",
+      website: "entrance.ioe.edu.np",
+    },
+    notices: [
+      {
+        id: 1,
+        title: "IOE Entrance 2081 - Application Form Notice",
+        source: "Institute of Engineering",
+        date: "May 11, 2024",
+        official: true,
+      },
+      {
+        id: 2,
+        title: "Syllabus and Model Questions",
+        source: "IOE Dean Office",
+        date: "May 5, 2024",
+        official: true,
+      },
+    ],
+    faqs: [
+      {
+        question: "How many times can I attempt the IOE entrance exam?",
+        answer:
+          "There is no restriction on attempts. Students can appear multiple times until they secure admission or exceed the age limit.",
+      },
+      {
+        question: "Can I choose my preferred engineering campus?",
+        answer:
+          "Yes, during counseling you can select your preferred campus based on your rank and seat availability.",
+      },
+    ],
+  },
   "ioe-entrance": {
     title: "IOE Engineering Entrance Examination 2081",
     shortTitle: "IOE Entrance",
@@ -101,7 +274,7 @@ const entranceData: { [key: string]: any } = {
 export default function EntranceDetailPage() {
   const params = useParams();
   const entranceId = params.id as string;
-  const entrance = entranceData[entranceId] || entranceData["ioe-entrance"];
+  const entrance = entranceData[entranceId] || entranceData["exam-0"];
 
   const [pdfModalOpen, setPdfModalOpen] = useState(false);
   const [pdfTitle, setPdfTitle] = useState("");
