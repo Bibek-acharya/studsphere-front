@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCollegeContext } from "./college-context";
+import { NotificationModal } from "@/components/notification-modal";
 
 const CollegeNavbar = () => {
   const { heroSectionRef } = useCollegeContext();
@@ -13,6 +14,7 @@ const CollegeNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isExploreOpen, setIsExploreOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -424,7 +426,7 @@ const CollegeNavbar = () => {
                   <ul className="space-y-1">
                     <li>
                       <Link
-                        href="/blog/news"
+                        href="/colleges/news"
                         className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium"
                       >
                         <span className="bg-blue-100 p-2 rounded-lg">
@@ -660,7 +662,10 @@ const CollegeNavbar = () => {
             </div>
 
             <div className="flex items-center gap-3 pt-4 border-t border-gray-200">
-              <button className="relative p-2 hover:bg-gray-100 rounded-lg">
+              <button
+                onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+                className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
                 <Bell className="w-5 h-5 text-gray-700" />
                 <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
               </button>
@@ -684,6 +689,13 @@ const CollegeNavbar = () => {
           </div>
         )}
       </div>
+
+      {/* Notification Modal - Filtered for College Context */}
+      <NotificationModal
+        isOpen={isNotificationOpen}
+        onClose={() => setIsNotificationOpen(false)}
+        filterCategory="Academics"
+      />
     </nav>
   );
 };

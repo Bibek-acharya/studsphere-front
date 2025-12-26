@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MapPin, Star, Check, Monitor, PenTool, Book } from "lucide-react";
+import Link from "next/link";
 
 export default function CollegeDetailPage() {
   const [activeTab, setActiveTab] = useState("about");
@@ -438,7 +439,12 @@ export default function CollegeDetailPage() {
         }
 
         .data-table tbody tr:hover {
-          background-color: #f9fafb;
+          background-color: #eff6ff;
+        }
+
+        .data-table tbody tr {
+          cursor: pointer;
+          transition: background-color 0.2s;
         }
 
         .card {
@@ -1020,9 +1026,13 @@ export default function CollegeDetailPage() {
                 </thead>
                 <tbody>
                   {courses.map((course, index) => (
-                    <tr key={index}>
+                    <tr
+                      key={index}
+                      onClick={() => window.location.href = `/colleges/courses/${index + 1}`}
+                      className="cursor-pointer hover:bg-blue-50 transition-colors"
+                    >
                       <td>
-                        <strong>{course.name}</strong>
+                        <strong className="text-blue-600 hover:underline">{course.name}</strong>
                       </td>
                       <td>{course.level}</td>
                       <td>{course.duration}</td>
@@ -1282,20 +1292,23 @@ export default function CollegeDetailPage() {
             <h2 className="section-title">Offered Programs</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {programs.map((program, index) => (
-                <div
+                <Link
                   key={index}
-                  className="card"
+                  href={`/colleges/courses/${index + 1}`}
+                  className="card cursor-pointer hover:shadow-lg transition-all"
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
                     flexWrap: "wrap",
                     padding: 20,
+                    textDecoration: "none",
                   }}
                 >
                   <div>
                     <h4
-                      style={{ marginBottom: 6, fontSize: 17, fontWeight: 600 }}
+                      style={{ marginBottom: 6, fontSize: 17, fontWeight: 600, color: "#111827" }}
+                      className="hover:text-blue-600 transition-colors"
                     >
                       {program.name}
                     </h4>
@@ -1329,10 +1342,11 @@ export default function CollegeDetailPage() {
                   <button
                     className="btn-outline"
                     style={{ padding: "8px 16px", fontSize: 13 }}
+                    onClick={(e) => e.preventDefault()}
                   >
                     Download Syllabus
                   </button>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -1537,75 +1551,7 @@ export default function CollegeDetailPage() {
           </div>
         </div>
 
-        {/* FOOTER */}
-        <footer>
-          <div className="footer-grid">
-            <div className="footer-col">
-              <h2
-                style={{
-                  color: "white",
-                  fontSize: 24,
-                  fontWeight: 700,
-                  marginBottom: 15,
-                }}
-              >
-                Goldenagete
-              </h2>
-              <p style={{ fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>
-                Empowering minds and shaping futures since 2005. Join us to be
-                part of a legacy of excellence and innovation.
-              </p>
-              <div style={{ display: "flex", gap: 15 }}>
-                {[1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    style={{
-                      width: 32,
-                      height: 32,
-                      background: "#374151",
-                      borderRadius: "50%",
-                    }}
-                  ></div>
-                ))}
-              </div>
-            </div>
-            <div className="footer-col">
-              <h3>Quick Links</h3>
-              <ul>
-                {["About Us", "Admissions", "Events", "Alumni", "Career"].map(
-                  (link, i) => (
-                    <li key={i}>
-                      <a href="#">{link}</a>
-                    </li>
-                  )
-                )}
-              </ul>
-            </div>
-            <div className="footer-col">
-              <h3>Academics</h3>
-              <ul>
-                {["Science & Tech", "Management", "Humanities", "Research"].map(
-                  (link, i) => (
-                    <li key={i}>
-                      <a href="#">{link}</a>
-                    </li>
-                  )
-                )}
-              </ul>
-            </div>
-            <div className="footer-col">
-              <h3>Contact Us</h3>
-              <ul>
-                <li>📍 Kamal Pokhari, Kathmandu</li>
-                <li>📞 +977-1-4445555</li>
-                <li>✉️ info@goldenagete.edu.np</li>
-              </ul>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            &copy; 2024 Goldenagete International College. All Rights Reserved.
-          </div>
-        </footer>
+       
       </div>
     </div>
   );

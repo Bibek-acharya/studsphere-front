@@ -1,27 +1,82 @@
 'use client';
 
 import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
-const categories = [
+interface University {
+  id: string;
+  name: string;
+  shortName: string;
+}
+
+interface Category {
+  id: string;
+  title: string;
+  count: string;
+  totalColleges: number;
+  universities: University[];
+}
+
+const categories: Category[] = [
   {
+    id: 'science-technology',
     title: 'Science & Technology',
     count: '2k+ colleges',
+    totalColleges: 2000,
+    universities: [
+      { id: 'tu', name: 'Tribhuvan University', shortName: 'TU' },
+      { id: 'ku', name: 'Kathmandu University', shortName: 'KU' },
+      { id: 'pu', name: 'Pokhara University', shortName: 'PU' },
+      { id: 'ppu', name: 'Purbanchal University', shortName: 'PPU' },
+    ],
   },
   {
+    id: 'engineering',
     title: 'Engineering',
     count: '2k+ colleges',
+    totalColleges: 1800,
+    universities: [
+      { id: 'tu', name: 'Tribhuvan University', shortName: 'TU' },
+      { id: 'ku', name: 'Kathmandu University', shortName: 'KU' },
+      { id: 'pu', name: 'Pokhara University', shortName: 'PU' },
+      { id: 'ppu', name: 'Purbanchal University', shortName: 'PPU' },
+    ],
   },
   {
+    id: 'management-business',
     title: 'Management & Business',
     count: '2k+ colleges',
+    totalColleges: 2200,
+    universities: [
+      { id: 'tu', name: 'Tribhuvan University', shortName: 'TU' },
+      { id: 'ku', name: 'Kathmandu University', shortName: 'KU' },
+      { id: 'pu', name: 'Pokhara University', shortName: 'PU' },
+      { id: 'ppu', name: 'Purbanchal University', shortName: 'PPU' },
+    ],
   },
   {
+    id: 'health-medical',
     title: 'Health & Medical',
     count: '2k+ colleges',
+    totalColleges: 1500,
+    universities: [
+      { id: 'tu', name: 'Tribhuvan University', shortName: 'TU' },
+      { id: 'ku', name: 'Kathmandu University', shortName: 'KU' },
+      { id: 'bpkihs', name: 'B.P. Koirala Institute', shortName: 'BPKIHS' },
+      { id: 'patan', name: 'Patan Academy', shortName: 'PAHS' },
+    ],
   },
   {
+    id: 'business',
     title: 'Business',
     count: '2k+ colleges',
+    totalColleges: 1900,
+    universities: [
+      { id: 'tu', name: 'Tribhuvan University', shortName: 'TU' },
+      { id: 'ku', name: 'Kathmandu University', shortName: 'KU' },
+      { id: 'pu', name: 'Pokhara University', shortName: 'PU' },
+      { id: 'ppu', name: 'Purbanchal University', shortName: 'PPU' },
+    ],
   },
 ];
 

@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Search, MapPin, Users, Star, GraduationCap, BookOpen, Award, ChevronDown, Grid, List, SlidersHorizontal, CheckCircle, Phone, Globe, Mail, Wifi, Car, Coffee, Dumbbell, Heart, Building } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { Search, MapPin, Users, Star, GraduationCap, BookOpen, Award, ChevronDown, Grid, List, CheckCircle, Phone, Globe, Mail, Wifi, Car, Coffee, Dumbbell, Heart, Building } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -11,20 +12,40 @@ import CollegeNavbar from '@/components/college/college-navbar';
 import HeroSection from '@/components/college/HeroSection';
 
 export default function CollegesPage() {
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get('category');
+  
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [selectedCourse, setSelectedCourse] = useState('all');
   const [selectedType, setSelectedType] = useState('all');
   const [selectedUniversity, setSelectedUniversity] = useState('all');
+  const [, setSelectedCategory] = useState(categoryParam || 'all');
   const [minRating, setMinRating] = useState(3.0);
   const [sortBy, setSortBy] = useState('default');
   const [viewMode, setViewMode] = useState('grid');
-  const [showFilters, setShowFilters] = useState(false);
+  const [] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
 
+  // Update category when URL param changes
+  useEffect(() => {
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+    }
+  }, [categoryParam]);
+
   const collegesPerPage = 6;
+
+  // Category to courses mapping
+  const categoryToCourses: Record<string, string[]> = {
+    'science-technology': ['BSC PCM', 'BSC Microbiology', 'BCA', 'BSc CSIT', 'B Tech Food', 'MSc Physics', 'MSc'],
+    'engineering': ['BE', 'B.Arch', 'ME', 'Engineering'],
+    'management-business': ['BBA', 'MBA', 'BBS', 'MBS', 'Business'],
+    'health-medical': ['MBBS', 'BDS', 'BSc Nursing', 'MD', 'Medical', 'Health'],
+    'business': ['BBA', 'MBA', 'Commerce', 'BA BSW'],
+  };
 
   const nepaliColleges = [
     {
@@ -314,14 +335,14 @@ export default function CollegesPage() {
   };
 
   const generateAdSection = () => (
-    <div className="col-span-full bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl p-6 flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 my-8">
-      <div className="flex-shrink-0 text-center md:text-left">
+    <div className="col-span-full bg-linear-to-r from-red-500 to-red-600 text-white rounded-xl p-6 flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 my-8">
+      <div className="shrink-0 text-center md:text-left">
         <div className="w-24 h-24 bg-white rounded-lg p-2 shadow-md mx-auto md:mx-0 flex items-center justify-center">
           <Award className="w-12 h-12 text-red-500" />
         </div>
         <p className="text-sm font-semibold mt-2">Award Winning Agency</p>
       </div>
-      <div className="flex flex-wrap justify-center md:justify-around flex-grow space-y-4 md:space-y-0 md:space-x-8">
+      <div className="flex flex-wrap justify-center md:justify-around grow space-y-4 md:space-y-0 md:space-x-8">
         <div className="text-center">
           <Users className="w-10 h-10 mx-auto mb-2" />
           <p className="text-2xl font-bold">350+</p>
@@ -444,8 +465,7 @@ export default function CollegesPage() {
 
           {/* Main Content Layout */}
           <div className="flex gap-8">
-            {/* Left Sidebar - Filters */}
-            <div className="w-80 flex-shrink-0">
+            {/* Left Sidebar - Filters */}            <div className="w-80 shrink-0">
               <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-lg font-bold text-gray-800">Filter & Search</h3>
@@ -869,7 +889,7 @@ export default function CollegesPage() {
                           <div className="grid grid-cols-2 gap-2 mt-auto">
                             <Button
                               onClick={() => toggleCardDetails(college.id)}
-                              className="py-2.5 text-sm text-white bg-gradient-to-r from-indigo-600 to-indigo-600 font-medium rounded-lg hover:from-indigo-700 hover:to-indigo-700 transition"
+                              className="py-2.5 text-sm text-white bg-linear-to-r from-indigo-600 to-indigo-600 font-medium rounded-lg hover:from-indigo-700 hover:to-indigo-700 transition"
                             >
                               {isExpanded ? (
                                 <>
@@ -882,7 +902,7 @@ export default function CollegesPage() {
                               )}
                             </Button>
                             <Link href={`/colleges/colleges/${college.id}`}>
-                              <Button className="w-full py-2.5 text-sm text-white bg-gradient-to-r from-indigo-600 to-indigo-600 font-medium rounded-lg hover:from-indigo-700 hover:to-indigo-700 transition">
+                              <Button className="w-full py-2.5 text-sm text-white bg-linear-to-r from-indigo-600 to-indigo-600 font-medium rounded-lg hover:from-indigo-700 hover:to-indigo-700 transition">
                                 <GraduationCap className="w-4 h-4 mr-1.5" /> View College
                               </Button>
                             </Link>

@@ -99,14 +99,14 @@ const HeroSection = forwardRef<HTMLDivElement>((props, ref) => {
               />
             ))}
             {/* Dark overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/50"></div>
+            <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-black/50"></div>
           </div>
 
           {/* Main Content */}
           <div className="relative z-20 text-center max-w-4xl mx-auto p-8 animate-fade-in-up">
             <h1 className="text-6xl lg:text-4xl md:text-3xl sm:text-2xl leading-tight font-extrabold mb-6 text-white text-shadow-strong letter-spacing-tight">
               Find Your Perfect{" "}
-              <span className="bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
                 College
               </span>
             </h1>
@@ -190,7 +190,7 @@ const HeroSection = forwardRef<HTMLDivElement>((props, ref) => {
                   </p>
                   <Link
                     href="/colleges/predictor"
-                    className="inline-block bg-gradient-to-r from-blue-500 to-green-500 text-white py-1.5 px-4 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 transform text-xs"
+                    className="inline-block bg-linear-to-r from-blue-500 to-green-500 text-white py-1.5 px-4 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 transform text-xs"
                   >
                     Start →
                   </Link>

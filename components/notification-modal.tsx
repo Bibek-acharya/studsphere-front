@@ -1,64 +1,89 @@
-"use client"
+"use client";
 
-import { X, Settings } from "lucide-react"
+import { X, Settings } from "lucide-react";
 
 interface NotificationModalProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
+  filterCategory?: string;
 }
 
-export function NotificationModal({ isOpen, onClose }: NotificationModalProps) {
-  if (!isOpen) return null
+export function NotificationModal({
+  isOpen,
+  onClose,
+  filterCategory,
+}: NotificationModalProps) {
+  if (!isOpen) return null;
 
-  const notifications = [
+  const allNotifications = [
     {
       id: 1,
       title: "New features added",
       description: "explore the updated dashboard.",
       time: "8m ago",
       category: "Product",
-      avatar: "bg-blue-500"
+      avatar: "bg-blue-500",
     },
     {
       id: 2,
-      title: "New features added",
-      description: "explore the updated dashboard.",
+      title: "New course enrollment opening",
+      description: "BBA and CSIT admissions are now open.",
       time: "8m ago",
       category: "Academics",
-      avatar: "bg-pink-500"
+      avatar: "bg-pink-500",
     },
     {
       id: 3,
-      title: "New features added",
-      description: "explore the updated dashboard.",
+      title: "Scholarship application deadline",
+      description: "Submit your scholarship forms before the deadline.",
       time: "8m ago",
       category: "Finance",
-      avatar: "bg-green-500"
+      avatar: "bg-green-500",
     },
     {
       id: 4,
-      title: "New features added",
-      description: "explore the updated dashboard.",
+      title: "Exam schedule updated",
+      description: "Check the new semester exam timetable.",
       time: "8m ago",
       category: "Academics",
-      avatar: "bg-orange-400"
-    }
-  ]
+      avatar: "bg-orange-400",
+    },
+    {
+      id: 5,
+      title: "College fest announced",
+      description: "Annual tech fest registration is now live.",
+      time: "1h ago",
+      category: "Academics",
+      avatar: "bg-purple-500",
+    },
+  ];
+
+  // Filter notifications based on category if provided
+  const notifications = filterCategory
+    ? allNotifications.filter((n) => n.category === filterCategory)
+    : allNotifications;
+
+  const unreadCount = notifications.filter((n) => n.id <= 3).length;
 
   return (
     <>
-      <div
-        className="fixed inset-0 z-40 bg-black/30"
-        onClick={onClose}
-      />
+      <div className="fixed inset-0 z-40 bg-black/30" onClick={onClose} />
 
       <div className="fixed top-16 right-4 z-50 w-full max-w-sm">
         <div className="bg-white rounded-lg shadow-lg border border-gray-200">
           {/* Header */}
           <div className="border-b border-gray-200 px-4 py-3 flex items-center justify-between">
             <div>
-              <h2 className="font-semibold text-gray-900">Notifications</h2>
-              <p className="text-xs text-gray-500">You have <span className="font-semibold text-blue-600">3 unread</span> messages</p>
+              <h2 className="font-semibold text-gray-900">
+                Notifications {filterCategory && `- ${filterCategory}`}
+              </h2>
+              <p className="text-xs text-gray-500">
+                You have{" "}
+                <span className="font-semibold text-blue-600">
+                  {unreadCount} unread
+                </span>{" "}
+                messages
+              </p>
             </div>
             <button
               onClick={onClose}
@@ -76,17 +101,27 @@ export function NotificationModal({ isOpen, onClose }: NotificationModalProps) {
                 className="border-b border-gray-100 p-4 hover:bg-gray-50 transition-colors cursor-pointer"
               >
                 <div className="flex gap-3">
-                  <div className={`${notification.avatar} w-10 h-10 rounded-full shrink-0`} />
+                  <div
+                    className={`${notification.avatar} w-10 h-10 rounded-full shrink-0`}
+                  />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1">
-                        <p className="font-semibold text-gray-900 text-sm">Studsphere Team</p>
-                        <p className="text-gray-600 text-sm line-clamp-2">{notification.title} - {notification.description}</p>
+                        <p className="font-semibold text-gray-900 text-sm">
+                          Studsphere Team
+                        </p>
+                        <p className="text-gray-600 text-sm line-clamp-2">
+                          {notification.title} - {notification.description}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 mt-2">
-                      <span className="text-xs text-gray-500">{notification.time}</span>
-                      <span className="text-xs font-semibold text-blue-600">{notification.category}</span>
+                      <span className="text-xs text-gray-500">
+                        {notification.time}
+                      </span>
+                      <span className="text-xs font-semibold text-blue-600">
+                        {notification.category}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -107,5 +142,5 @@ export function NotificationModal({ isOpen, onClose }: NotificationModalProps) {
         </div>
       </div>
     </>
-  )
+  );
 }

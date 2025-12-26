@@ -1,9 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
 import {
   MapPin,
   Star,
@@ -13,10 +15,10 @@ import {
   Heart,
   ArrowRight,
   ChevronDown,
-} from 'lucide-react';
+} from "lucide-react";
 
-type Category = 'Science' | 'Management' | 'Humanities' | 'Law';
-type DegreeType = 'Bachelor' | 'Master' | 'PhD';
+type Category = "Science" | "Management" | "Humanities" | "Law";
+type DegreeType = "Bachelor" | "Master" | "PhD";
 
 interface Program {
   id: number;
@@ -48,25 +50,49 @@ interface CollegeWithDetails extends College {
 
 interface CollegeCardProps {
   college: CollegeWithDetails;
+  isSelected?: boolean;
+  onSelect?: (id: number) => void;
 }
 
-function CollegeCard({ college }: CollegeCardProps) {
+function CollegeCard({
+  college,
+  isSelected = false,
+  onSelect,
+}: CollegeCardProps) {
   const { programs, facilities } = college;
   const handleInquiry = () => {
-    console.log('Inquiry for:', college.name);
+    console.log("Inquiry for:", college.name);
   };
 
   const handleDetails = () => {
-    console.log('Details for:', college.name);
+    window.location.href = `/colleges/colleges/${college.id}`;
   };
 
   const handleFavorite = () => {
-    console.log('Favorite:', college.name);
+    console.log("Favorite:", college.name);
+  };
+
+  const handleSelectToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onSelect) {
+      onSelect(college.id);
+    }
   };
 
   return (
-    <Card className="overflow-hidden border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+    <Card className="overflow-hidden border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md relative">
       <div className="p-6">
+        {/* Checkbox for selection */}
+        {onSelect && (
+          <div className="absolute top-4 left-4 z-10">
+            <Checkbox
+              checked={isSelected}
+              onCheckedChange={() => onSelect(college.id)}
+              onClick={(e) => e.stopPropagation()}
+              className="h-5 w-5"
+            />
+          </div>
+        )}
         {/* Header Section */}
         <div className="mb-4 flex items-start gap-4">
           {/* Logo */}
@@ -125,7 +151,7 @@ function CollegeCard({ college }: CollegeCardProps) {
               Popular
             </Badge>
           )}
-          {college.status === 'Ongoing' && (
+          {college.status === "Ongoing" && (
             <Badge
               variant="outline"
               className="border-green-200 bg-green-50 text-green-600"
@@ -139,7 +165,9 @@ function CollegeCard({ college }: CollegeCardProps) {
         {/* Programs Section */}
         <div className="mb-6 border-t border-gray-100 pt-6">
           <div className="mb-4 flex items-center justify-between">
-            <h4 className="text-sm font-medium text-gray-500">Program Offered</h4>
+            <h4 className="text-sm font-medium text-gray-500">
+              Program Offered
+            </h4>
             <span className="text-sm font-semibold text-blue-600">
               {programs.length} Programs
             </span>
@@ -147,17 +175,18 @@ function CollegeCard({ college }: CollegeCardProps) {
 
           <div className="space-y-2">
             {programs.slice(0, 3).map((program) => (
-              <div
+              <Link
                 key={program.id}
-                className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3"
+                href={`/colleges/courses/${program.id}`}
+                className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3 hover:bg-blue-50 transition-colors cursor-pointer group"
               >
-                <span className="text-sm font-medium text-gray-900">
+                <span className="text-sm font-medium text-gray-900 group-hover:text-blue-600">
                   {program.name}
                 </span>
-                <span className="rounded-full bg-gray-200 px-3 py-1 text-xs font-medium text-gray-600">
+                <span className="rounded-full bg-gray-200 px-3 py-1 text-xs font-medium text-gray-600 group-hover:bg-blue-100 group-hover:text-blue-700">
                   {program.degree_type}
                 </span>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -188,7 +217,7 @@ function CollegeCard({ college }: CollegeCardProps) {
             onClick={handleInquiry}
             className="group flex-1 bg-gray-900 text-white hover:bg-gray-800"
           >
-            {college.status === 'Ongoing' ? 'Inquiry Now' : 'Apply Now'}
+            {college.status === "Ongoing" ? "Inquiry Now" : "Apply Now"}
             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Button>
           <Button
@@ -209,76 +238,108 @@ function CollegeCard({ college }: CollegeCardProps) {
 const mockColleges: CollegeWithDetails[] = [
   {
     id: 1,
-    name: 'KIST College of Information Technology',
-    location: 'KamalPokari, Kathmandu',
+    name: "KIST College of Information Technology",
+    location: "KamalPokari, Kathmandu",
     rating: 4.2,
-    university: 'TU',
-    type: 'Private',
+    university: "TU",
+    type: "Private",
     is_verified: true,
     is_popular: true,
-    status: 'Ongoing',
+    status: "Ongoing",
     programs: [
-      { id: 1, name: 'BE Computer Engineering', degree_type: 'Bachelor' },
-      { id: 2, name: 'BE Electronics Engineering', degree_type: 'Bachelor' },
-      { id: 3, name: 'ME Computer Engineering', degree_type: 'Master' },
+      { id: 1, name: "BE Computer Engineering", degree_type: "Bachelor" },
+      { id: 2, name: "BE Electronics Engineering", degree_type: "Bachelor" },
+      { id: 3, name: "ME Computer Engineering", degree_type: "Master" },
     ],
     facilities: [
-      { id: 1, name: 'Library' },
-      { id: 2, name: 'Lab' },
-      { id: 3, name: 'Sports' },
-      { id: 4, name: 'Hostel' },
+      { id: 1, name: "Library" },
+      { id: 2, name: "Lab" },
+      { id: 3, name: "Sports" },
+      { id: 4, name: "Hostel" },
     ],
   },
   {
     id: 2,
-    name: 'Kathmandu University',
-    location: 'Dhulikhel, Kavre',
+    name: "Kathmandu University",
+    location: "Dhulikhel, Kavre",
     rating: 4.5,
-    university: 'KU',
-    type: 'Private',
+    university: "KU",
+    type: "Private",
     is_verified: true,
     is_popular: false,
-    status: 'Ongoing',
+    status: "Ongoing",
     programs: [
-      { id: 4, name: 'BCA', degree_type: 'Bachelor' },
-      { id: 5, name: 'MBA', degree_type: 'Master' },
+      { id: 4, name: "BCA", degree_type: "Bachelor" },
+      { id: 5, name: "MBA", degree_type: "Master" },
     ],
     facilities: [
-      { id: 5, name: 'Library' },
-      { id: 6, name: 'Lab' },
-      { id: 7, name: 'Cafeteria' },
+      { id: 5, name: "Library" },
+      { id: 6, name: "Lab" },
+      { id: 7, name: "Cafeteria" },
     ],
   },
   {
     id: 3,
-    name: 'Pulchowk Engineering Campus',
-    location: 'Pulchowk, Lalitpur',
+    name: "Pulchowk Engineering Campus",
+    location: "Pulchowk, Lalitpur",
     rating: 4.8,
-    university: 'TU',
-    type: 'Public',
+    university: "TU",
+    type: "Public",
     is_verified: true,
     is_popular: true,
-    status: 'Ongoing',
+    status: "Ongoing",
     programs: [
-      { id: 6, name: 'BE Civil Engineering', degree_type: 'Bachelor' },
-      { id: 7, name: 'BE Mechanical Engineering', degree_type: 'Bachelor' },
-      { id: 8, name: 'ME Structural Engineering', degree_type: 'Master' },
+      { id: 6, name: "BE Civil Engineering", degree_type: "Bachelor" },
+      { id: 7, name: "BE Mechanical Engineering", degree_type: "Bachelor" },
+      { id: 8, name: "ME Structural Engineering", degree_type: "Master" },
     ],
     facilities: [
-      { id: 8, name: 'Library' },
-      { id: 9, name: 'Lab' },
-      { id: 10, name: 'Workshop' },
-      { id: 11, name: 'Sports' },
+      { id: 8, name: "Library" },
+      { id: 9, name: "Lab" },
+      { id: 10, name: "Workshop" },
+      { id: 11, name: "Sports" },
     ],
   },
-  
 ];
 
 export function FeaturedColleges() {
-  const [selectedDegree] = useState<DegreeType>('Bachelor');
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [selectedDegree] = useState<DegreeType>("Bachelor");
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null
+  );
+  const [selectedColleges, setSelectedColleges] = useState<number[]>([]);
+  const [showBulkActions, setShowBulkActions] = useState(false);
 
-  const categories: Category[] = ['Science', 'Management', 'Humanities', 'Law'];
+  const categories: Category[] = ["Science", "Management", "Humanities", "Law"];
+
+  const handleSelectCollege = (id: number) => {
+    setSelectedColleges((prev) => {
+      const newSelection = prev.includes(id)
+        ? prev.filter((collegeId) => collegeId !== id)
+        : [...prev, id];
+      setShowBulkActions(newSelection.length > 0);
+      return newSelection;
+    });
+  };
+
+  const handleSelectAll = () => {
+    if (selectedColleges.length === filteredColleges.length) {
+      setSelectedColleges([]);
+      setShowBulkActions(false);
+    } else {
+      setSelectedColleges(filteredColleges.map((c) => c.id));
+      setShowBulkActions(true);
+    }
+  };
+
+  const handleBulkCompare = () => {
+    const ids = selectedColleges.join(",");
+    window.location.href = `/colleges/compare?ids=${ids}`;
+  };
+
+  const handleBulkInquiry = () => {
+    alert(`Sending inquiry to ${selectedColleges.length} colleges`);
+  };
 
   // Filter colleges based on selected filters
   const filteredColleges = mockColleges.filter((college) => {
@@ -304,31 +365,74 @@ export function FeaturedColleges() {
         </div>
 
         {/* Filters */}
-        <div className="mb-8 flex flex-wrap items-center gap-3">
-          <Button
-            variant="default"
-            className="group rounded-full bg-blue-600 px-6 py-2 text-white hover:bg-blue-700"
-          >
-            {selectedDegree}
-            <ChevronDown className="ml-2 h-4 w-4 transition-transform group-hover:translate-y-0.5" />
-          </Button>
-
-          {categories.map((category) => (
+        <div className="mb-8 space-y-4">
+          <div className="flex flex-wrap items-center gap-3">
             <Button
-              key={category}
-              variant="outline"
-              onClick={() =>
-                setSelectedCategory(selectedCategory === category ? null : category)
-              }
-              className={`rounded-full border-gray-300 px-6 py-2 transition-colors ${
-                selectedCategory === category
-                  ? 'border-blue-600 bg-blue-50 text-blue-600 hover:bg-blue-100'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
+              variant="default"
+              className="group rounded-full bg-blue-600 px-6 py-2 text-white hover:bg-blue-700"
             >
-              {category}
+              {selectedDegree}
+              <ChevronDown className="ml-2 h-4 w-4 transition-transform group-hover:translate-y-0.5" />
             </Button>
-          ))}
+
+            {categories.map((category) => (
+              <Button
+                key={category}
+                variant="outline"
+                onClick={() =>
+                  setSelectedCategory(
+                    selectedCategory === category ? null : category
+                  )
+                }
+                className={`rounded-full border-gray-300 px-6 py-2 transition-colors ${
+                  selectedCategory === category
+                    ? "border-blue-600 bg-blue-50 text-blue-600 hover:bg-blue-100"
+                    : "bg-white text-gray-700 hover:bg-gray-100"
+                }`}
+              >
+                {category}
+              </Button>
+            ))}
+
+            {filteredColleges.length > 0 && (
+              <Button
+                variant="outline"
+                onClick={handleSelectAll}
+                className="ml-auto rounded-full border-gray-300 px-6 py-2"
+              >
+                {selectedColleges.length === filteredColleges.length
+                  ? "Deselect All"
+                  : "Select All"}
+              </Button>
+            )}
+          </div>
+
+          {/* Bulk Actions Bar */}
+          {showBulkActions && (
+            <div className="flex items-center justify-between rounded-lg border border-blue-200 bg-blue-50 px-6 py-3">
+              <span className="text-sm font-medium text-blue-900">
+                {selectedColleges.length} college
+                {selectedColleges.length > 1 ? "s" : ""} selected
+              </span>
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="outline"
+                  onClick={handleBulkCompare}
+                  className="rounded-full bg-white hover:bg-blue-100"
+                  disabled={selectedColleges.length < 2}
+                >
+                  Compare Selected
+                </Button>
+                <Button
+                  variant="default"
+                  onClick={handleBulkInquiry}
+                  className="rounded-full bg-blue-600 text-white hover:bg-blue-700"
+                >
+                  Send Bulk Inquiry
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* College Cards Grid */}
@@ -337,13 +441,17 @@ export function FeaturedColleges() {
             <CollegeCard
               key={college.id}
               college={college}
+              isSelected={selectedColleges.includes(college.id)}
+              onSelect={handleSelectCollege}
             />
           ))}
         </div>
 
         {filteredColleges.length === 0 && (
           <div className="py-12 text-center">
-            <p className="text-gray-600">No colleges found matching your criteria.</p>
+            <p className="text-gray-600">
+              No colleges found matching your criteria.
+            </p>
           </div>
         )}
       </div>
