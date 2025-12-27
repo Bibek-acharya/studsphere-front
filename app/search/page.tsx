@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import SearchResultsLayout from "@/components/search/SearchResultsLayout";
 import {
@@ -106,7 +106,7 @@ const generateMockResults = () => {
   return [...jobs, ...colleges, ...events];
 };
 
-export default function SearchResultsPage() {
+function SearchResultsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
@@ -289,5 +289,19 @@ export default function SearchResultsPage() {
         )}
       </div>
     </SearchResultsLayout>
+  );
+}
+
+export default function SearchResultsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          Loading...
+        </div>
+      }
+    >
+      <SearchResultsContent />
+    </Suspense>
   );
 }
