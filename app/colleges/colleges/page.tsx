@@ -1,30 +1,51 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { Search, MapPin, Users, Star, GraduationCap, BookOpen, Award, ChevronDown, Grid, List, CheckCircle, Phone, Globe, Mail, Wifi, Car, Coffee, Dumbbell, Heart, Building } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import Link from 'next/link';
-import CollegeNavbar from '@/components/college/college-navbar';
-import HeroSection from '@/components/college/HeroSection';
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import {
+  Search,
+  MapPin,
+  Users,
+  Star,
+  GraduationCap,
+  BookOpen,
+  Award,
+  ChevronDown,
+  Grid,
+  List,
+  CheckCircle,
+  Phone,
+  Globe,
+  Mail,
+  Wifi,
+  Car,
+  Coffee,
+  Dumbbell,
+  Heart,
+  Building,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
+import CollegeNavbar from "@/components/college/college-navbar";
+import HeroSection from "@/components/college/HeroSection";
 
-export default function CollegesPage() {
+function CollegesContent() {
   const searchParams = useSearchParams();
-  const categoryParam = searchParams.get('category');
-  
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedLevel, setSelectedLevel] = useState('all');
-  const [selectedLocation, setSelectedLocation] = useState('all');
-  const [selectedCourse, setSelectedCourse] = useState('all');
-  const [selectedType, setSelectedType] = useState('all');
-  const [selectedUniversity, setSelectedUniversity] = useState('all');
-  const [, setSelectedCategory] = useState(categoryParam || 'all');
+  const categoryParam = searchParams.get("category");
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedLevel, setSelectedLevel] = useState("all");
+  const [selectedLocation, setSelectedLocation] = useState("all");
+  const [selectedCourse, setSelectedCourse] = useState("all");
+  const [selectedType, setSelectedType] = useState("all");
+  const [selectedUniversity, setSelectedUniversity] = useState("all");
+  const [, setSelectedCategory] = useState(categoryParam || "all");
   const [minRating, setMinRating] = useState(3.0);
-  const [sortBy, setSortBy] = useState('default');
-  const [viewMode, setViewMode] = useState('grid');
+  const [sortBy, setSortBy] = useState("default");
+  const [viewMode, setViewMode] = useState("grid");
   const [] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
@@ -43,258 +64,350 @@ export default function CollegesPage() {
 
   const nepaliColleges = [
     {
-      id: 'golden-gate-international',
-      name: 'Golden Gate International College',
-      location: 'Purano-Baneshwor, Kathmandu',
-      district: 'Kathmandu',
-      province: 'Bagmati',
+      id: "golden-gate-international",
+      name: "Golden Gate International College",
+      location: "Purano-Baneshwor, Kathmandu",
+      district: "Kathmandu",
+      province: "Bagmati",
       rating: 4.7,
       students: 3500,
-      level: 'bachelors',
-      type: 'private',
-      university: 'Tribhuvan University',
-      courses: ['BSC PCM', 'BSC Microbiology', 'BCA', 'BA BSW', 'B Tech Food', 'MSc Physics', 'MBA'],
-      fees: 'NPR 2,50,000 - 4,50,000/year',
+      level: "bachelors",
+      type: "private",
+      university: "Tribhuvan University",
+      courses: [
+        "BSC PCM",
+        "BSC Microbiology",
+        "BCA",
+        "BA BSW",
+        "B Tech Food",
+        "MSc Physics",
+        "MBA",
+      ],
+      fees: "NPR 2,50,000 - 4,50,000/year",
       established: 1995,
-      image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
-      logo: 'https://static.vecteezy.com/system/resources/previews/006/788/494/non_2x/university-college-logo-open-book-symbol-of-knowledge-and-education-university-library-and-school-logotype-template-illustration-vector.jpg',
-      description: 'Premier international college offering diverse programs with modern facilities.',
-      facilities: ['WiFi Campus', 'Library', 'Transport', 'Cafeteria', 'Sports'],
+      image:
+        "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
+      logo: "https://static.vecteezy.com/system/resources/previews/006/788/494/non_2x/university-college-logo-open-book-symbol-of-knowledge-and-education-university-library-and-school-logotype-template-illustration-vector.jpg",
+      description:
+        "Premier international college offering diverse programs with modern facilities.",
+      facilities: [
+        "WiFi Campus",
+        "Library",
+        "Transport",
+        "Cafeteria",
+        "Sports",
+      ],
       isVerified: true,
-      email: 'admissions@goldengate.edu.np',
-      website: 'www.goldengate.edu.np',
+      email: "admissions@goldengate.edu.np",
+      website: "www.goldengate.edu.np",
       reviews: 250,
-      ratingBreakdown: { 5: 70, 4: 20, 3: 7, 2: 2, 1: 1 }
+      ratingBreakdown: { 5: 70, 4: 20, 3: 7, 2: 2, 1: 1 },
     },
     {
-      id: 'st-xaviers-college',
-      name: 'St. Xavier\'s College',
-      location: 'Maitighar, Kathmandu',
-      district: 'Kathmandu',
-      province: 'Bagmati',
+      id: "st-xaviers-college",
+      name: "St. Xavier's College",
+      location: "Maitighar, Kathmandu",
+      district: "Kathmandu",
+      province: "Bagmati",
       rating: 4.9,
       students: 3500,
-      level: '+2',
-      type: 'private',
-      university: 'Tribhuvan University',
-      courses: ['Science', 'Management', 'Humanities'],
-      fees: 'NPR 1,20,000 - 1,50,000/year',
+      level: "+2",
+      type: "private",
+      university: "Tribhuvan University",
+      courses: ["Science", "Management", "Humanities"],
+      fees: "NPR 1,20,000 - 1,50,000/year",
       established: 1988,
-      image: 'https://images.pexels.com/photos/159490/yale-university-landscape-universities-schools-159490.jpeg?auto=compress&cs=tinysrgb&w=400',
-      logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/0/05/St._Xavier%27s_College%2C_Kathmandu.png/220px-St._Xavier%27s_College%2C_Kathmandu.png',
-      description: 'Premier +2 college known for academic excellence and discipline.',
-      facilities: ['WiFi Campus', 'Library', 'Labs', 'Sports Ground'],
+      image:
+        "https://images.pexels.com/photos/159490/yale-university-landscape-universities-schools-159490.jpeg?auto=compress&cs=tinysrgb&w=400",
+      logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/05/St._Xavier%27s_College%2C_Kathmandu.png/220px-St._Xavier%27s_College%2C_Kathmandu.png",
+      description:
+        "Premier +2 college known for academic excellence and discipline.",
+      facilities: ["WiFi Campus", "Library", "Labs", "Sports Ground"],
       isVerified: true,
-      email: 'info@sxc.edu.np',
-      website: 'www.sxc.edu.np',
+      email: "info@sxc.edu.np",
+      website: "www.sxc.edu.np",
       reviews: 400,
-      ratingBreakdown: { 5: 85, 4: 10, 3: 5, 2: 0, 1: 0 }
+      ratingBreakdown: { 5: 85, 4: 10, 3: 5, 2: 0, 1: 0 },
     },
     {
-      id: 'kathmandu-university',
-      name: 'Kathmandu University',
-      location: 'Dhulikhel, Kavre',
-      district: 'Kavre',
-      province: 'Bagmati',
+      id: "kathmandu-university",
+      name: "Kathmandu University",
+      location: "Dhulikhel, Kavre",
+      district: "Kavre",
+      province: "Bagmati",
       rating: 4.8,
       students: 15000,
-      level: 'university',
-      type: 'public',
-      university: 'Kathmandu University',
-      courses: ['Engineering', 'Medicine', 'Management', 'Science', 'Arts', 'Pharmacy'],
-      fees: 'NPR 1,50,000 - 15,00,000/year',
+      level: "university",
+      type: "public",
+      university: "Kathmandu University",
+      courses: [
+        "Engineering",
+        "Medicine",
+        "Management",
+        "Science",
+        "Arts",
+        "Pharmacy",
+      ],
+      fees: "NPR 1,50,000 - 15,00,000/year",
       established: 1991,
-      image: 'https://images.pexels.com/photos/1438081/pexels-photo-1438081.jpeg?auto=compress&cs=tinysrgb&w=400',
-      logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/fa/Kathmandu_University_Logo.png/220px-Kathmandu_University_Logo.png',
-      description: 'A modern university known for quality education and research excellence.',
-      facilities: ['Modern Labs', 'Digital Library', 'Hostels', 'Teaching Hospital', 'Research Centers'],
+      image:
+        "https://images.pexels.com/photos/1438081/pexels-photo-1438081.jpeg?auto=compress&cs=tinysrgb&w=400",
+      logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/fa/Kathmandu_University_Logo.png/220px-Kathmandu_University_Logo.png",
+      description:
+        "A modern university known for quality education and research excellence.",
+      facilities: [
+        "Modern Labs",
+        "Digital Library",
+        "Hostels",
+        "Teaching Hospital",
+        "Research Centers",
+      ],
       isVerified: true,
-      email: 'admission@ku.edu.np',
-      website: 'www.ku.edu.np',
+      email: "admission@ku.edu.np",
+      website: "www.ku.edu.np",
       reviews: 600,
-      ratingBreakdown: { 5: 80, 4: 15, 3: 5, 2: 0, 1: 0 }
+      ratingBreakdown: { 5: 80, 4: 15, 3: 5, 2: 0, 1: 0 },
     },
     {
-      id: 'pulchowk-campus',
-      name: 'Pulchowk Campus (IOE)',
-      location: 'Pulchowk, Lalitpur',
-      district: 'Lalitpur',
-      province: 'Bagmati',
+      id: "pulchowk-campus",
+      name: "Pulchowk Campus (IOE)",
+      location: "Pulchowk, Lalitpur",
+      district: "Lalitpur",
+      province: "Bagmati",
       rating: 4.8,
       students: 4500,
-      level: 'bachelors',
-      type: 'public',
-      university: 'Tribhuvan University',
-      courses: ['BE Civil', 'BE Electronics', 'BE Mechanical', 'BE Computer', 'B.Arch'],
-      fees: 'NPR 1,20,000 - 2,00,000/year',
+      level: "bachelors",
+      type: "public",
+      university: "Tribhuvan University",
+      courses: [
+        "BE Civil",
+        "BE Electronics",
+        "BE Mechanical",
+        "BE Computer",
+        "B.Arch",
+      ],
+      fees: "NPR 1,20,000 - 2,00,000/year",
       established: 1972,
-      image: 'https://images.pexels.com/photos/1205651/pexels-photo-1205651.jpeg?auto=compress&cs=tinysrgb&w=400',
-      logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c5/Pulchowk_Campus_Logo.png/220px-Pulchowk_Campus_Logo.png',
-      description: 'Premier engineering college of Nepal under Tribhuvan University.',
-      facilities: ['Engineering Labs', 'Workshops', 'Library', 'Research Centers', 'Hostels'],
+      image:
+        "https://images.pexels.com/photos/1205651/pexels-photo-1205651.jpeg?auto=compress&cs=tinysrgb&w=400",
+      logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/c5/Pulchowk_Campus_Logo.png/220px-Pulchowk_Campus_Logo.png",
+      description:
+        "Premier engineering college of Nepal under Tribhuvan University.",
+      facilities: [
+        "Engineering Labs",
+        "Workshops",
+        "Library",
+        "Research Centers",
+        "Hostels",
+      ],
       isVerified: true,
-      email: 'info@pcampus.edu.np',
-      website: 'www.pcampus.edu.np',
+      email: "info@pcampus.edu.np",
+      website: "www.pcampus.edu.np",
       reviews: 550,
-      ratingBreakdown: { 5: 80, 4: 15, 3: 4, 2: 1, 1: 0 }
+      ratingBreakdown: { 5: 80, 4: 15, 3: 4, 2: 1, 1: 0 },
     },
     {
-      id: 'ace-institute',
-      name: 'Ace Institute of Management',
-      location: 'Baneshwor, Kathmandu',
-      district: 'Kathmandu',
-      province: 'Bagmati',
+      id: "ace-institute",
+      name: "Ace Institute of Management",
+      location: "Baneshwor, Kathmandu",
+      district: "Kathmandu",
+      province: "Bagmati",
       rating: 4.7,
       students: 2000,
-      level: 'bachelors',
-      type: 'private',
-      university: 'Kathmandu University',
-      courses: ['MBA', 'EMBA', 'BBA', 'BBS'],
-      fees: 'NPR 3,50,000 - 8,00,000/year',
+      level: "bachelors",
+      type: "private",
+      university: "Kathmandu University",
+      courses: ["MBA", "EMBA", "BBA", "BBS"],
+      fees: "NPR 3,50,000 - 8,00,000/year",
       established: 1999,
-      image: 'https://images.pexels.com/photos/1154189/pexels-photo-1154189.jpeg?auto=compress&cs=tinysrgb&w=400',
-      logo: 'https://ace.edu.np/wp-content/uploads/2023/03/ace-logo.png',
-      description: 'Leading management college with international affiliations.',
-      facilities: ['WiFi Campus', 'Resource Center', 'Career Services'],
+      image:
+        "https://images.pexels.com/photos/1154189/pexels-photo-1154189.jpeg?auto=compress&cs=tinysrgb&w=400",
+      logo: "https://ace.edu.np/wp-content/uploads/2023/03/ace-logo.png",
+      description:
+        "Leading management college with international affiliations.",
+      facilities: ["WiFi Campus", "Resource Center", "Career Services"],
       isVerified: true,
-      email: 'admission@ace.edu.np',
-      website: 'www.ace.edu.np',
+      email: "admission@ace.edu.np",
+      website: "www.ace.edu.np",
       reviews: 350,
-      ratingBreakdown: { 5: 78, 4: 17, 3: 5, 2: 0, 1: 0 }
+      ratingBreakdown: { 5: 78, 4: 17, 3: 5, 2: 0, 1: 0 },
     },
     {
-      id: 'trinity-international',
-      name: 'Trinity International College',
-      location: 'Dillibazar, Kathmandu',
-      district: 'Kathmandu',
-      province: 'Bagmati',
+      id: "trinity-international",
+      name: "Trinity International College",
+      location: "Dillibazar, Kathmandu",
+      district: "Kathmandu",
+      province: "Bagmati",
       rating: 4.6,
       students: 2800,
-      level: '+2',
-      type: 'private',
-      university: 'Tribhuvan University',
-      courses: ['A-Levels', 'BBS', 'BSc CSIT', 'BCA', 'BHM'],
-      fees: 'NPR 1,80,000 - 3,50,000/year',
+      level: "+2",
+      type: "private",
+      university: "Tribhuvan University",
+      courses: ["A-Levels", "BBS", "BSc CSIT", "BCA", "BHM"],
+      fees: "NPR 1,80,000 - 3,50,000/year",
       established: 2003,
-      image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
-      logo: 'https://trinitycollege.edu.np/wp-content/uploads/2023/07/Trinity-Logo-Web.png',
-      description: 'International college offering diverse programs with modern facilities.',
-      facilities: ['WiFi Campus', 'Library', 'Auditorium'],
+      image:
+        "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
+      logo: "https://trinitycollege.edu.np/wp-content/uploads/2023/07/Trinity-Logo-Web.png",
+      description:
+        "International college offering diverse programs with modern facilities.",
+      facilities: ["WiFi Campus", "Library", "Auditorium"],
       isVerified: true,
-      email: 'info@trinitycollege.edu.np',
-      website: 'www.trinitycollege.edu.np',
+      email: "info@trinitycollege.edu.np",
+      website: "www.trinitycollege.edu.np",
       reviews: 280,
-      ratingBreakdown: { 5: 75, 4: 18, 3: 5, 2: 2, 1: 0 }
+      ratingBreakdown: { 5: 75, 4: 18, 3: 5, 2: 2, 1: 0 },
     },
     {
-      id: 'tribhuvan-university',
-      name: 'Tribhuvan University',
-      location: 'Kirtipur, Kathmandu',
-      district: 'Kathmandu',
-      province: 'Bagmati',
+      id: "tribhuvan-university",
+      name: "Tribhuvan University",
+      location: "Kirtipur, Kathmandu",
+      district: "Kathmandu",
+      province: "Bagmati",
       rating: 4.8,
       students: 450000,
-      level: 'university',
-      type: 'public',
-      university: 'Tribhuvan University',
-      courses: ['Engineering', 'Medicine', 'Management', 'Arts', 'Science', 'Law', 'Education'],
-      fees: 'NPR 25,000 - 2,50,000/year',
+      level: "university",
+      type: "public",
+      university: "Tribhuvan University",
+      courses: [
+        "Engineering",
+        "Medicine",
+        "Management",
+        "Arts",
+        "Science",
+        "Law",
+        "Education",
+      ],
+      fees: "NPR 25,000 - 2,50,000/year",
       established: 1959,
-      image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
-      logo: 'https://static.vecteezy.com/system/resources/previews/006/788/494/non_2x/university-college-logo-open-book-symbol-of-knowledge-and-education-university-library-and-school-logotype-template-illustration-vector.jpg',
-      description: 'The oldest and largest university in Nepal, offering diverse programs across multiple faculties.',
-      facilities: ['Central Library', 'Research Centers', 'Student Hostels', 'Sports Complex', 'Medical Center'],
+      image:
+        "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
+      logo: "https://static.vecteezy.com/system/resources/previews/006/788/494/non_2x/university-college-logo-open-book-symbol-of-knowledge-and-education-university-library-and-school-logotype-template-illustration-vector.jpg",
+      description:
+        "The oldest and largest university in Nepal, offering diverse programs across multiple faculties.",
+      facilities: [
+        "Central Library",
+        "Research Centers",
+        "Student Hostels",
+        "Sports Complex",
+        "Medical Center",
+      ],
       isVerified: true,
-      email: 'info@tribhuvan-university.edu.np',
-      website: 'www.tribhuvan-university.edu.np',
+      email: "info@tribhuvan-university.edu.np",
+      website: "www.tribhuvan-university.edu.np",
       reviews: 1200,
-      ratingBreakdown: { 5: 75, 4: 18, 3: 5, 2: 1, 1: 1 }
+      ratingBreakdown: { 5: 75, 4: 18, 3: 5, 2: 1, 1: 1 },
     },
     {
-      id: 'kcmit',
-      name: 'KCMIT',
-      location: 'Lalitpur',
-      district: 'Lalitpur',
-      province: 'Bagmati',
+      id: "kcmit",
+      name: "KCMIT",
+      location: "Lalitpur",
+      district: "Lalitpur",
+      province: "Bagmati",
       rating: 4.5,
       students: 1200,
-      level: 'bachelors',
-      type: 'private',
-      university: 'Kathmandu University',
-      courses: ['Computer Engineering', 'Software Engineering', 'IT'],
-      fees: 'NPR 4,50,000 - 6,00,000/year',
+      level: "bachelors",
+      type: "private",
+      university: "Kathmandu University",
+      courses: ["Computer Engineering", "Software Engineering", "IT"],
+      fees: "NPR 4,50,000 - 6,00,000/year",
       established: 2000,
-      image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
-      logo: 'https://static.vecteezy.com/system/resources/previews/006/788/494/non_2x/university-college-logo-open-book-symbol-of-knowledge-and-education-university-library-and-school-logotype-template-illustration-vector.jpg',
-      description: 'Leading IT college affiliated with Kathmandu University.',
-      facilities: ['Computer Labs', 'Project Labs', 'Library', 'Cafeteria', 'Parking'],
+      image:
+        "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
+      logo: "https://static.vecteezy.com/system/resources/previews/006/788/494/non_2x/university-college-logo-open-book-symbol-of-knowledge-and-education-university-library-and-school-logotype-template-illustration-vector.jpg",
+      description: "Leading IT college affiliated with Kathmandu University.",
+      facilities: [
+        "Computer Labs",
+        "Project Labs",
+        "Library",
+        "Cafeteria",
+        "Parking",
+      ],
       isVerified: true,
-      email: 'info@kcmit.edu.np',
-      website: 'www.kcmit.edu.np',
+      email: "info@kcmit.edu.np",
+      website: "www.kcmit.edu.np",
       reviews: 180,
-      ratingBreakdown: { 5: 65, 4: 25, 3: 8, 2: 2, 1: 0 }
-    }
+      ratingBreakdown: { 5: 65, 4: 25, 3: 8, 2: 2, 1: 0 },
+    },
   ];
 
-
   const locationOptions = [
-    { value: 'all', label: 'All Locations' },
-    { value: 'Kathmandu', label: 'Kathmandu' },
-    { value: 'Lalitpur', label: 'Lalitpur' },
-    { value: 'Kavre', label: 'Kavre' }
+    { value: "all", label: "All Locations" },
+    { value: "Kathmandu", label: "Kathmandu" },
+    { value: "Lalitpur", label: "Lalitpur" },
+    { value: "Kavre", label: "Kavre" },
   ];
 
   const courseOptions = [
-    { value: 'all', label: 'All Programs' },
-    { value: 'BSC PCM', label: 'BSC PCM' },
-    { value: 'BCA', label: 'BCA' },
-    { value: 'MBA', label: 'MBA' },
-    { value: 'Engineering', label: 'Engineering' },
-    { value: 'Science', label: 'Science' },
-    { value: 'Management', label: 'Management' }
+    { value: "all", label: "All Programs" },
+    { value: "BSC PCM", label: "BSC PCM" },
+    { value: "BCA", label: "BCA" },
+    { value: "MBA", label: "MBA" },
+    { value: "Engineering", label: "Engineering" },
+    { value: "Science", label: "Science" },
+    { value: "Management", label: "Management" },
   ];
 
   const universityOptions = [
-    { value: 'all', label: 'All Universities' },
-    { value: 'Tribhuvan University', label: 'Tribhuvan University' },
-    { value: 'Kathmandu University', label: 'Kathmandu University' }
+    { value: "all", label: "All Universities" },
+    { value: "Tribhuvan University", label: "Tribhuvan University" },
+    { value: "Kathmandu University", label: "Kathmandu University" },
   ];
 
   const sortOptions = [
-    { value: 'default', label: 'Default' },
-    { value: 'name-asc', label: 'Name (A-Z)' },
-    { value: 'name-desc', label: 'Name (Z-A)' },
-    { value: 'rating-desc', label: 'Rating (High to Low)' },
-    { value: 'established-asc', label: 'Established (Oldest First)' }
+    { value: "default", label: "Default" },
+    { value: "name-asc", label: "Name (A-Z)" },
+    { value: "name-desc", label: "Name (Z-A)" },
+    { value: "rating-desc", label: "Rating (High to Low)" },
+    { value: "established-asc", label: "Established (Oldest First)" },
   ];
 
-  const filteredColleges = nepaliColleges.filter(college => {
-    const searchMatch = college.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      college.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      college.courses.some(course => course.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredColleges = nepaliColleges
+    .filter((college) => {
+      const searchMatch =
+        college.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        college.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        college.courses.some((course) =>
+          course.toLowerCase().includes(searchTerm.toLowerCase())
+        );
 
-    const levelMatch = selectedLevel === 'all' || college.level === selectedLevel;
-    const locationMatch = selectedLocation === 'all' || college.location.includes(selectedLocation);
-    const courseMatch = selectedCourse === 'all' || college.courses.includes(selectedCourse);
-    const typeMatch = selectedType === 'all' || college.type === selectedType;
-    const universityMatch = selectedUniversity === 'all' || college.university === selectedUniversity;
-    const ratingMatch = college.rating >= minRating;
+      const levelMatch =
+        selectedLevel === "all" || college.level === selectedLevel;
+      const locationMatch =
+        selectedLocation === "all" ||
+        college.location.includes(selectedLocation);
+      const courseMatch =
+        selectedCourse === "all" || college.courses.includes(selectedCourse);
+      const typeMatch = selectedType === "all" || college.type === selectedType;
+      const universityMatch =
+        selectedUniversity === "all" ||
+        college.university === selectedUniversity;
+      const ratingMatch = college.rating >= minRating;
 
-    return searchMatch && levelMatch && locationMatch && courseMatch && typeMatch && universityMatch && ratingMatch;
-  }).sort((a, b) => {
-    switch (sortBy) {
-      case 'name-asc':
-        return a.name.localeCompare(b.name);
-      case 'name-desc':
-        return b.name.localeCompare(a.name);
-      case 'rating-desc':
-        return b.rating - a.rating;
-      case 'established-asc':
-        return a.established - b.established;
-      default:
-        return 0;
-    }
-  });
+      return (
+        searchMatch &&
+        levelMatch &&
+        locationMatch &&
+        courseMatch &&
+        typeMatch &&
+        universityMatch &&
+        ratingMatch
+      );
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "name-asc":
+          return a.name.localeCompare(b.name);
+        case "name-desc":
+          return b.name.localeCompare(a.name);
+        case "rating-desc":
+          return b.rating - a.rating;
+        case "established-asc":
+          return a.established - b.established;
+        default:
+          return 0;
+      }
+    });
 
   const totalPages = Math.ceil(filteredColleges.length / collegesPerPage);
   const startIndex = (currentPage - 1) * collegesPerPage;
@@ -318,9 +431,16 @@ export default function CollegesPage() {
 
     for (let i = 0; i < 5; i++) {
       if (i < fullStars) {
-        stars.push(<Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />);
+        stars.push(
+          <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+        );
       } else if (i === fullStars && hasHalfStar) {
-        stars.push(<Star key={i} className="w-3 h-3 fill-yellow-400/50 text-yellow-400" />);
+        stars.push(
+          <Star
+            key={i}
+            className="w-3 h-3 fill-yellow-400/50 text-yellow-400"
+          />
+        );
       } else {
         stars.push(<Star key={i} className="w-3 h-3 text-gray-300" />);
       }
@@ -358,24 +478,24 @@ export default function CollegesPage() {
 
   const getFacilityIcon = (facility: string) => {
     switch (facility.toLowerCase()) {
-      case 'wifi campus':
-      case 'high-speed internet':
+      case "wifi campus":
+      case "high-speed internet":
         return <Wifi className="w-4 h-4" />;
-      case 'library':
-      case 'digital library':
-      case 'central library':
+      case "library":
+      case "digital library":
+      case "central library":
         return <BookOpen className="w-4 h-4" />;
-      case 'transport':
-      case 'parking':
+      case "transport":
+      case "parking":
         return <Car className="w-4 h-4" />;
-      case 'cafeteria':
+      case "cafeteria":
         return <Coffee className="w-4 h-4" />;
-      case 'sports':
-      case 'sports ground':
-      case 'sports complex':
+      case "sports":
+      case "sports ground":
+      case "sports complex":
         return <Dumbbell className="w-4 h-4" />;
-      case 'teaching hospital':
-      case 'medical center':
+      case "teaching hospital":
+      case "medical center":
         return <Heart className="w-4 h-4" />;
       default:
         return <Building className="w-4 h-4" />;
@@ -385,13 +505,25 @@ export default function CollegesPage() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setCurrentPage(1);
-  }, [searchTerm, selectedLevel, selectedLocation, selectedCourse, selectedType, selectedUniversity, minRating, sortBy]);
+  }, [
+    searchTerm,
+    selectedLevel,
+    selectedLocation,
+    selectedCourse,
+    selectedType,
+    selectedUniversity,
+    minRating,
+    sortBy,
+  ]);
 
   return (
-    <div className="min-h-screen" style={{
-      background: 'white',
-      fontFamily: 'Inter, sans-serif'
-    }}>
+    <div
+      className="min-h-screen"
+      style={{
+        background: "white",
+        fontFamily: "Inter, sans-serif",
+      }}
+    >
       {/* Navigation */}
       <CollegeNavbar />
 
@@ -438,40 +570,50 @@ export default function CollegesPage() {
         </div>
       </div> */}
 
-      <div className="p-4 md:p-8" style={{
-        background: 'white'
-      }}>
+      <div
+        className="p-4 md:p-8"
+        style={{
+          background: "white",
+        }}
+      >
         <div className="max-w-7xl mx-auto">
           {/* Breadcrumbs */}
           <nav className="text-sm text-gray-600 mb-4">
-            Home {'>'} All Colleges
+            Home {">"} All Colleges
           </nav>
 
           {/* Header Section */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 mt-8">
             <div className="flex items-center mb-4 md:mb-0">
-              <h1 className="text-4xl font-bold text-gray-800 mr-4">All Colleges</h1>
+              <h1 className="text-4xl font-bold text-gray-800 mr-4">
+                All Colleges
+              </h1>
               <span className="bg-purple-200 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold">
                 {filteredColleges.length} Colleges
               </span>
             </div>
-            <p className="text-gray-600">Discover top-rated colleges for your future endeavors.</p>
+            <p className="text-gray-600">
+              Discover top-rated colleges for your future endeavors.
+            </p>
           </div>
 
           {/* Main Content Layout */}
           <div className="flex gap-8">
-            {/* Left Sidebar - Filters */}            <div className="w-80 shrink-0">
+            {/* Left Sidebar - Filters */}{" "}
+            <div className="w-80 shrink-0">
               <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-bold text-gray-800">Filter & Search</h3>
+                  <h3 className="text-lg font-bold text-gray-800">
+                    Filter & Search
+                  </h3>
                   <Button
                     onClick={() => {
-                      setSearchTerm('');
-                      setSelectedLocation('all');
-                      setSelectedCourse('all');
-                      setSelectedUniversity('all');
+                      setSearchTerm("");
+                      setSelectedLocation("all");
+                      setSelectedCourse("all");
+                      setSelectedUniversity("all");
                       setMinRating(3.0);
-                      setSortBy('default');
+                      setSortBy("default");
                     }}
                     variant="outline"
                     size="sm"
@@ -484,7 +626,9 @@ export default function CollegesPage() {
                 <div className="space-y-6">
                   {/* Search */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">Search Colleges</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Search Colleges
+                    </label>
                     <div className="relative">
                       <Input
                         type="text"
@@ -499,33 +643,43 @@ export default function CollegesPage() {
 
                   {/* Sort By */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">Sort By</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Sort By
+                    </label>
                     <select
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value)}
                       className="w-full h-11 px-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500 bg-white"
                     >
-                      {sortOptions.map(option => (
-                        <option key={option.value} value={option.value}>{option.label}</option>
+                      {sortOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
                       ))}
                     </select>
                   </div>
 
                   {/* University */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">University</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      University
+                    </label>
                     <div className="space-y-2">
-                      {universityOptions.map(option => (
+                      {universityOptions.map((option) => (
                         <label key={option.value} className="flex items-center">
                           <input
                             type="radio"
                             name="university"
                             value={option.value}
                             checked={selectedUniversity === option.value}
-                            onChange={(e) => setSelectedUniversity(e.target.value)}
+                            onChange={(e) =>
+                              setSelectedUniversity(e.target.value)
+                            }
                             className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                           />
-                          <span className="ml-2 text-sm text-gray-700">{option.label}</span>
+                          <span className="ml-2 text-sm text-gray-700">
+                            {option.label}
+                          </span>
                         </label>
                       ))}
                     </div>
@@ -533,19 +687,25 @@ export default function CollegesPage() {
 
                   {/* Location */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">Location</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Location
+                    </label>
                     <div className="space-y-2">
-                      {locationOptions.map(option => (
+                      {locationOptions.map((option) => (
                         <label key={option.value} className="flex items-center">
                           <input
                             type="radio"
                             name="location"
                             value={option.value}
                             checked={selectedLocation === option.value}
-                            onChange={(e) => setSelectedLocation(e.target.value)}
+                            onChange={(e) =>
+                              setSelectedLocation(e.target.value)
+                            }
                             className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                           />
-                          <span className="ml-2 text-sm text-gray-700">{option.label}</span>
+                          <span className="ml-2 text-sm text-gray-700">
+                            {option.label}
+                          </span>
                         </label>
                       ))}
                     </div>
@@ -553,9 +713,11 @@ export default function CollegesPage() {
 
                   {/* Programs */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">Programs</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Programs
+                    </label>
                     <div className="space-y-2 max-h-48 overflow-y-auto">
-                      {courseOptions.map(option => (
+                      {courseOptions.map((option) => (
                         <label key={option.value} className="flex items-center">
                           <input
                             type="radio"
@@ -565,7 +727,9 @@ export default function CollegesPage() {
                             onChange={(e) => setSelectedCourse(e.target.value)}
                             className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                           />
-                          <span className="ml-2 text-sm text-gray-700">{option.label}</span>
+                          <span className="ml-2 text-sm text-gray-700">
+                            {option.label}
+                          </span>
                         </label>
                       ))}
                     </div>
@@ -573,102 +737,122 @@ export default function CollegesPage() {
 
                   {/* College Type */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">College Type</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      College Type
+                    </label>
                     <div className="space-y-2">
                       <label className="flex items-center">
                         <input
                           type="radio"
                           name="type"
                           value="all"
-                          checked={selectedType === 'all'}
+                          checked={selectedType === "all"}
                           onChange={(e) => setSelectedType(e.target.value)}
                           className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">All Types</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          All Types
+                        </span>
                       </label>
                       <label className="flex items-center">
                         <input
                           type="radio"
                           name="type"
                           value="private"
-                          checked={selectedType === 'private'}
+                          checked={selectedType === "private"}
                           onChange={(e) => setSelectedType(e.target.value)}
                           className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">Private</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          Private
+                        </span>
                       </label>
                       <label className="flex items-center">
                         <input
                           type="radio"
                           name="type"
                           value="public"
-                          checked={selectedType === 'public'}
+                          checked={selectedType === "public"}
                           onChange={(e) => setSelectedType(e.target.value)}
                           className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">Public</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          Public
+                        </span>
                       </label>
                     </div>
                   </div>
 
                   {/* Education Level */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">Education Level</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Education Level
+                    </label>
                     <div className="space-y-2">
                       <label className="flex items-center">
                         <input
                           type="radio"
                           name="level"
                           value="all"
-                          checked={selectedLevel === 'all'}
+                          checked={selectedLevel === "all"}
                           onChange={(e) => setSelectedLevel(e.target.value)}
                           className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">All Levels</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          All Levels
+                        </span>
                       </label>
                       <label className="flex items-center">
                         <input
                           type="radio"
                           name="level"
                           value="+2"
-                          checked={selectedLevel === '+2'}
+                          checked={selectedLevel === "+2"}
                           onChange={(e) => setSelectedLevel(e.target.value)}
                           className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">+2 Level</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          +2 Level
+                        </span>
                       </label>
                       <label className="flex items-center">
                         <input
                           type="radio"
                           name="level"
                           value="bachelors"
-                          checked={selectedLevel === 'bachelors'}
+                          checked={selectedLevel === "bachelors"}
                           onChange={(e) => setSelectedLevel(e.target.value)}
                           className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">Bachelors</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          Bachelors
+                        </span>
                       </label>
                       <label className="flex items-center">
                         <input
                           type="radio"
                           name="level"
                           value="masters"
-                          checked={selectedLevel === 'masters'}
+                          checked={selectedLevel === "masters"}
                           onChange={(e) => setSelectedLevel(e.target.value)}
                           className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">Masters</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          Masters
+                        </span>
                       </label>
                       <label className="flex items-center">
                         <input
                           type="radio"
                           name="level"
                           value="university"
-                          checked={selectedLevel === 'university'}
+                          checked={selectedLevel === "university"}
                           onChange={(e) => setSelectedLevel(e.target.value)}
                           className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">University</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          University
+                        </span>
                       </label>
                     </div>
                   </div>
@@ -695,7 +879,9 @@ export default function CollegesPage() {
 
                   {/* Fee Range */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">Fee Range (Annual)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Fee Range (Annual)
+                    </label>
                     <div className="space-y-2">
                       <label className="flex items-center">
                         <input
@@ -705,7 +891,9 @@ export default function CollegesPage() {
                           defaultChecked
                           className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">All Ranges</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          All Ranges
+                        </span>
                       </label>
                       <label className="flex items-center">
                         <input
@@ -714,7 +902,9 @@ export default function CollegesPage() {
                           value="low"
                           className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">Under 1 Lakh</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          Under 1 Lakh
+                        </span>
                       </label>
                       <label className="flex items-center">
                         <input
@@ -723,7 +913,9 @@ export default function CollegesPage() {
                           value="medium"
                           className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">1-3 Lakhs</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          1-3 Lakhs
+                        </span>
                       </label>
                       <label className="flex items-center">
                         <input
@@ -732,7 +924,9 @@ export default function CollegesPage() {
                           value="high"
                           className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">3-5 Lakhs</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          3-5 Lakhs
+                        </span>
                       </label>
                       <label className="flex items-center">
                         <input
@@ -741,53 +935,69 @@ export default function CollegesPage() {
                           value="premium"
                           className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">5+ Lakhs</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          5+ Lakhs
+                        </span>
                       </label>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
             {/* Right Content - College Listings */}
             <div className="flex-1">
               {/* Top Bar */}
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-4">
                   <Button
-                    onClick={() => setViewMode('grid')}
-                    className={`flex items-center px-4 py-2 rounded-lg transition duration-200 ${viewMode === 'grid'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                      }`}
+                    onClick={() => setViewMode("grid")}
+                    className={`flex items-center px-4 py-2 rounded-lg transition duration-200 ${
+                      viewMode === "grid"
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    }`}
                   >
                     <Grid className="w-4 h-4 mr-2" />
                     Grid
                   </Button>
                   <Button
-                    onClick={() => setViewMode('list')}
-                    className={`flex items-center px-4 py-2 rounded-lg transition duration-200 ${viewMode === 'list'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                      }`}
+                    onClick={() => setViewMode("list")}
+                    className={`flex items-center px-4 py-2 rounded-lg transition duration-200 ${
+                      viewMode === "list"
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    }`}
                   >
                     <List className="w-4 h-4 mr-2" />
                     List
                   </Button>
                 </div>
                 <div className="text-sm text-gray-600">
-                  Showing {startIndex + 1}-{Math.min(endIndex, filteredColleges.length)} of {filteredColleges.length} colleges
+                  Showing {startIndex + 1}-
+                  {Math.min(endIndex, filteredColleges.length)} of{" "}
+                  {filteredColleges.length} colleges
                 </div>
               </div>
 
               {/* College Grid/List */}
-              <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`}>
+              <div
+                className={`grid gap-6 ${
+                  viewMode === "grid"
+                    ? "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
+                    : "grid-cols-1"
+                }`}
+              >
                 {currentColleges.map((college, index) => {
                   const isExpanded = expandedCards.has(college.id);
-                  const totalRatingCount = Object.values(college.ratingBreakdown).reduce((sum, count) => sum + count, 0);
+                  const totalRatingCount = Object.values(
+                    college.ratingBreakdown
+                  ).reduce((sum, count) => sum + count, 0);
 
                   // Add ad section after every 6 colleges in grid view or every 2 in list view
-                  const shouldShowAd = viewMode === 'grid' ? (index + 1) % 6 === 0 : (index + 1) % 2 === 0;
+                  const shouldShowAd =
+                    viewMode === "grid"
+                      ? (index + 1) % 6 === 0
+                      : (index + 1) % 2 === 0;
 
                   return (
                     <div key={college.id}>
@@ -799,7 +1009,8 @@ export default function CollegesPage() {
                             alt={`${college.name} Campus`}
                             className="object-cover w-full h-full opacity-90"
                             onError={(e) => {
-                              e.currentTarget.src = 'https://placehold.co/400x160/A4BEEF/ffffff?text=Campus+Image';
+                              e.currentTarget.src =
+                                "https://placehold.co/400x160/A4BEEF/ffffff?text=Campus+Image";
                             }}
                           />
                           <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent"></div>
@@ -822,13 +1033,16 @@ export default function CollegesPage() {
                                 alt={`${college.name} Logo`}
                                 className="w-12 h-12 rounded-full border-2 border-white shadow-md object-cover"
                                 onError={(e) => {
-                                  e.currentTarget.src = 'https://placehold.co/48x48/A4BEEF/ffffff?text=Logo';
+                                  e.currentTarget.src =
+                                    "https://placehold.co/48x48/A4BEEF/ffffff?text=Logo";
                                 }}
                               />
                             </div>
                             <div className="flex-1">
                               <div className="flex items-center">
-                                <h2 className="text-base font-bold text-gray-800">{college.name}</h2>
+                                <h2 className="text-base font-bold text-gray-800">
+                                  {college.name}
+                                </h2>
                                 {college.isVerified && (
                                   <CheckCircle className="w-4 h-4 ml-1.5 text-indigo-600" />
                                 )}
@@ -888,17 +1102,20 @@ export default function CollegesPage() {
                             >
                               {isExpanded ? (
                                 <>
-                                  <ChevronDown className="w-4 h-4 mr-1.5 rotate-180" /> Less
+                                  <ChevronDown className="w-4 h-4 mr-1.5 rotate-180" />{" "}
+                                  Less
                                 </>
                               ) : (
                                 <>
-                                  <BookOpen className="w-4 h-4 mr-1.5" /> Details
+                                  <BookOpen className="w-4 h-4 mr-1.5" />{" "}
+                                  Details
                                 </>
                               )}
                             </Button>
                             <Link href={`/colleges/colleges/${college.id}`}>
                               <Button className="w-full py-2.5 text-sm text-white bg-linear-to-r from-indigo-600 to-indigo-600 font-medium rounded-lg hover:from-indigo-700 hover:to-indigo-700 transition">
-                                <GraduationCap className="w-4 h-4 mr-1.5" /> View College
+                                <GraduationCap className="w-4 h-4 mr-1.5" />{" "}
+                                View College
                               </Button>
                             </Link>
                           </div>
@@ -919,28 +1136,49 @@ export default function CollegesPage() {
                               <div className="pt-2">
                                 <div className="flex items-center justify-between bg-amber-50 p-2 rounded-lg border border-amber-200">
                                   <div className="flex items-center">
-                                    <span className="text-xs font-bold text-gray-700 mr-2">Rating: {college.rating.toFixed(1)}</span>
+                                    <span className="text-xs font-bold text-gray-700 mr-2">
+                                      Rating: {college.rating.toFixed(1)}
+                                    </span>
                                     <div className="flex space-x-0.5">
                                       {generateRatingStars(college.rating)}
                                     </div>
                                   </div>
-                                  <span className="text-xs text-gray-500">({college.reviews} reviews)</span>
+                                  <span className="text-xs text-gray-500">
+                                    ({college.reviews} reviews)
+                                  </span>
                                 </div>
 
                                 {/* Rating Breakdown */}
                                 <div className="mt-2 space-y-1">
-                                  {Object.keys(college.ratingBreakdown).sort((a, b) => parseInt(b) - parseInt(a)).map(star => {
-                                    const percentage = totalRatingCount > 0 ? (college.ratingBreakdown[star as unknown as keyof typeof college.ratingBreakdown] / totalRatingCount) * 100 : 0;
-                                    return (
-                                      <div key={star} className="flex items-center text-xs">
-                                        <span className="w-4">{star}★</span>
-                                        <div className="flex-1 bg-gray-200 rounded-full h-1.5 mx-2">
-                                          <div className="bg-amber-400 h-1.5 rounded-full" style={{ width: `${percentage}%` }}></div>
+                                  {Object.keys(college.ratingBreakdown)
+                                    .sort((a, b) => parseInt(b) - parseInt(a))
+                                    .map((star) => {
+                                      const percentage =
+                                        totalRatingCount > 0
+                                          ? (college.ratingBreakdown[
+                                              star as unknown as keyof typeof college.ratingBreakdown
+                                            ] /
+                                              totalRatingCount) *
+                                            100
+                                          : 0;
+                                      return (
+                                        <div
+                                          key={star}
+                                          className="flex items-center text-xs"
+                                        >
+                                          <span className="w-4">{star}★</span>
+                                          <div className="flex-1 bg-gray-200 rounded-full h-1.5 mx-2">
+                                            <div
+                                              className="bg-amber-400 h-1.5 rounded-full"
+                                              style={{
+                                                width: `${percentage}%`,
+                                              }}
+                                            ></div>
+                                          </div>
+                                          <span>{Math.round(percentage)}%</span>
                                         </div>
-                                        <span>{Math.round(percentage)}%</span>
-                                      </div>
-                                    );
-                                  })}
+                                      );
+                                    })}
                                 </div>
                               </div>
                             </div>
@@ -948,7 +1186,9 @@ export default function CollegesPage() {
                         </CardContent>
                       </Card>
 
-                      {shouldShowAd && index < currentColleges.length - 1 && generateAdSection()}
+                      {shouldShowAd &&
+                        index < currentColleges.length - 1 &&
+                        generateAdSection()}
                     </div>
                   );
                 })}
@@ -960,9 +1200,12 @@ export default function CollegesPage() {
                   <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
                     <Search className="w-12 h-12 text-gray-400" />
                   </div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">No colleges found</h3>
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+                    No colleges found
+                  </h3>
                   <p className="text-gray-600 mb-6">
-                    Try adjusting your search criteria or filters to find more colleges.
+                    Try adjusting your search criteria or filters to find more
+                    colleges.
                   </p>
                 </div>
               )}
@@ -971,7 +1214,9 @@ export default function CollegesPage() {
               {totalPages > 1 && (
                 <div className="flex justify-center items-center space-x-2 mt-8">
                   <Button
-                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
                     disabled={currentPage === 1}
                     className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -984,10 +1229,11 @@ export default function CollegesPage() {
                         <Button
                           key={pageNum}
                           onClick={() => setCurrentPage(pageNum)}
-                          className={`px-3 py-1 rounded-md text-sm ${pageNum === currentPage
-                            ? 'bg-purple-500 text-white'
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                            }`}
+                          className={`px-3 py-1 rounded-md text-sm ${
+                            pageNum === currentPage
+                              ? "bg-purple-500 text-white"
+                              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                          }`}
                         >
                           {pageNum}
                         </Button>
@@ -995,7 +1241,9 @@ export default function CollegesPage() {
                     })}
                   </div>
                   <Button
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
                     disabled={currentPage === totalPages}
                     className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -1008,8 +1256,6 @@ export default function CollegesPage() {
         </div>
       </div>
 
-
-
       <style jsx>{`
         .slider::-webkit-slider-thumb {
           appearance: none;
@@ -1018,7 +1264,7 @@ export default function CollegesPage() {
           background: #667eea;
           border-radius: 50%;
           cursor: pointer;
-          box-shadow: 0 0 5px rgba(0,0,0,0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
         .slider::-moz-range-thumb {
           width: 20px;
@@ -1026,10 +1272,24 @@ export default function CollegesPage() {
           background: #667eea;
           border-radius: 50%;
           cursor: pointer;
-          box-shadow: 0 0 5px rgba(0,0,0,0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
           border: none;
         }
       `}</style>
     </div>
+  );
+}
+
+export default function CollegesPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          Loading...
+        </div>
+      }
+    >
+      <CollegesContent />
+    </Suspense>
   );
 }
