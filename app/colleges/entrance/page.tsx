@@ -9,7 +9,7 @@ import ExamCard from "@/components/college/entrance/ExamCard";
 import Pagination from "@/components/college/entrance/Pagination";
 import { MOCK_EXAMS } from "@/components/college/entrance/Constant";
 
-const App: React.FC = () => {
+export default function EntrancePage() {
   const router = useRouter();
 
   const handleViewDetails = (id: string) => {
@@ -23,7 +23,7 @@ const App: React.FC = () => {
         <SearchHero />
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           {/* Sidebar */}
-          <aside className="w-full lg:w-[350px] shrink-0">
+          <aside className="w-full lg:w-87.5 shrink-0">
             <Sidebar onReset={() => console.log("reset")} />
           </aside>
 
@@ -98,6 +98,4 @@ const App: React.FC = () => {
       </footer>
     </div>
   );
-};
-
-export default App;
+}

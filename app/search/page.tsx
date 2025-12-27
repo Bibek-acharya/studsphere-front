@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import SearchResultsLayout from "@/components/search/SearchResultsLayout";
 import {
@@ -9,13 +9,13 @@ import {
   Calendar,
   MapPin,
   Star,
-  Building2,
   BookOpen,
+  Search,
 } from "lucide-react";
 import Link from "next/link";
 
 // Mock data for demonstration
-const generateMockResults = (query: string) => {
+const generateMockResults = () => {
   const jobs = [
     {
       id: 1,
@@ -134,7 +134,7 @@ export default function SearchResultsPage() {
     },
   ];
 
-  const allResults = generateMockResults(searchQuery);
+  const allResults = generateMockResults();
 
   const filteredResults = allResults.filter((result) => {
     if (activeFilters.category.length > 0) {

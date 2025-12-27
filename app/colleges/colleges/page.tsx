@@ -32,6 +32,7 @@ export default function CollegesPage() {
   // Update category when URL param changes
   useEffect(() => {
     if (categoryParam) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedCategory(categoryParam);
     }
   }, [categoryParam]);
@@ -39,13 +40,6 @@ export default function CollegesPage() {
   const collegesPerPage = 6;
 
   // Category to courses mapping
-  const categoryToCourses: Record<string, string[]> = {
-    'science-technology': ['BSC PCM', 'BSC Microbiology', 'BCA', 'BSc CSIT', 'B Tech Food', 'MSc Physics', 'MSc'],
-    'engineering': ['BE', 'B.Arch', 'ME', 'Engineering'],
-    'management-business': ['BBA', 'MBA', 'BBS', 'MBS', 'Business'],
-    'health-medical': ['MBBS', 'BDS', 'BSc Nursing', 'MD', 'Medical', 'Health'],
-    'business': ['BBA', 'MBA', 'Commerce', 'BA BSW'],
-  };
 
   const nepaliColleges = [
     {
@@ -389,6 +383,7 @@ export default function CollegesPage() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCurrentPage(1);
   }, [searchTerm, selectedLevel, selectedLocation, selectedCourse, selectedType, selectedUniversity, minRating, sortBy]);
 
@@ -796,9 +791,9 @@ export default function CollegesPage() {
 
                   return (
                     <div key={college.id}>
-                      <Card className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[430px] flex flex-col">
+                      <Card className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-107.5 flex flex-col">
                         {/* Header Image */}
-                        <div className="relative h-36 bg-gradient-to-r from-indigo-600 to-indigo-600 overflow-hidden">
+                        <div className="relative h-36 bg-linear-to-r from-indigo-600 to-indigo-600 overflow-hidden">
                           <img
                             src={college.image}
                             alt={`${college.name} Campus`}
@@ -807,7 +802,7 @@ export default function CollegesPage() {
                               e.currentTarget.src = 'https://placehold.co/400x160/A4BEEF/ffffff?text=Campus+Image';
                             }}
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                          <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent"></div>
                           <span className="absolute top-3 right-3 bg-white/90 text-gray-800 px-2.5 py-1 text-xs font-bold rounded-full shadow-sm flex items-center">
                             <GraduationCap className="w-3 h-3 mr-1 text-indigo-600" />
                             {college.university}
@@ -821,7 +816,7 @@ export default function CollegesPage() {
                         <CardContent className="p-3 space-y-2 flex-1 flex flex-col">
                           {/* College Info */}
                           <div className="flex items-start gap-3">
-                            <div className="flex-shrink-0">
+                            <div className="shrink-0">
                               <img
                                 src={college.logo}
                                 alt={`${college.name} Logo`}
