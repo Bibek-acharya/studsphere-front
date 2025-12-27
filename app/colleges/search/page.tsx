@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import SearchResultsLayout from "@/components/search/SearchResultsLayout";
 import { MapPin, Star, BookOpen, Building2, Users } from "lucide-react";
@@ -76,7 +76,7 @@ const mockColleges = [
   },
 ];
 
-export default function CollegeSearchPage() {
+function CollegeSearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
@@ -282,5 +282,19 @@ export default function CollegeSearchPage() {
         )}
       </div>
     </SearchResultsLayout>
+  );
+}
+
+export default function CollegeSearchPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          Loading...
+        </div>
+      }
+    >
+      <CollegeSearchContent />
+    </Suspense>
   );
 }
