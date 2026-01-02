@@ -12,6 +12,7 @@ import CollegeCard from "@/components/college/CoursesSection";
 import { ExamAnnouncements } from "@/components/college/exam-announcements";
 import { LatestNews } from "@/components/college/latest-news";
 import { useCollegeContext } from "@/components/college/college-context";
+import { CTASection } from '@/components/cta-section';
 
 const Page = () => {
   const { heroSectionRef } = useCollegeContext();
@@ -30,6 +31,7 @@ const Page = () => {
       <LatestNews />
 
       <TestimonialsSection />
+       <CTASection />
     </div>
   );
 };

@@ -5,6 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import Link from "next/link";
 import {
   MapPin,
@@ -14,11 +21,10 @@ import {
   CheckCircle2,
   Heart,
   ArrowRight,
-  ChevronDown,
 } from "lucide-react";
 
 type Category = "Science" | "Management" | "Humanities" | "Law";
-type DegreeType = "Bachelor" | "Master" | "PhD";
+type DegreeType = "Plus2" | "Bachelor" | "Master" | "PhD";
 
 interface Program {
   id: number;
@@ -70,13 +76,6 @@ function CollegeCard({
 
   const handleFavorite = () => {
     console.log("Favorite:", college.name);
-  };
-
-  const handleSelectToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onSelect) {
-      onSelect(college.id);
-    }
   };
 
   return (
@@ -303,14 +302,18 @@ const mockColleges: CollegeWithDetails[] = [
 ];
 
 export function FeaturedColleges() {
-  const [selectedDegree] = useState<DegreeType>("Bachelor");
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    null
-  );
+  const [selectedDegree, setSelectedDegree] = useState<DegreeType>("Bachelor");
+  const [selectedProgramOption, setSelectedProgramOption] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category>("Science");
+  const [showCategoryMenu, setShowCategoryMenu] = useState(false);
   const [selectedColleges, setSelectedColleges] = useState<number[]>([]);
   const [showBulkActions, setShowBulkActions] = useState(false);
 
-  const categories: Category[] = ["Science", "Management", "Humanities", "Law"];
+  const programOptions: Record<string, string[]> = {
+    Plus2: ["Humanities", "Science", "Education", "Management"],
+    Bachelor: ["BBA", "BSc", "BSc.CIT", "BBM", "BTTM"],
+    Master: ["MBA", "MBA IT"],
+  };
 
   const handleSelectCollege = (id: number) => {
     setSelectedColleges((prev) => {
@@ -345,8 +348,13 @@ export function FeaturedColleges() {
   const filteredColleges = mockColleges.filter((college) => {
     const hasMatchingProgram = college.programs.some((program) => {
       const degreeMatch = program.degree_type === selectedDegree;
+      const programMatch =
+        !selectedProgramOption ||
+        program.name
+          .toLowerCase()
+          .includes(selectedProgramOption.toLowerCase());
       // In a real app, you'd have category info in programs
-      return degreeMatch;
+      return degreeMatch && programMatch;
     });
     return hasMatchingProgram;
   });
@@ -367,32 +375,48 @@ export function FeaturedColleges() {
         {/* Filters */}
         <div className="mb-8 space-y-4">
           <div className="flex flex-wrap items-center gap-3">
-            <Button
-              variant="default"
-              className="group rounded-full bg-blue-600 px-6 py-2 text-white hover:bg-blue-700"
-            >
-              {selectedDegree}
-              <ChevronDown className="ml-2 h-4 w-4 transition-transform group-hover:translate-y-0.5" />
-            </Button>
-
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant="outline"
-                onClick={() =>
-                  setSelectedCategory(
-                    selectedCategory === category ? null : category
-                  )
-                }
-                className={`rounded-full border-gray-300 px-6 py-2 transition-colors ${
-                  selectedCategory === category
-                    ? "border-blue-600 bg-blue-50 text-blue-600 hover:bg-blue-100"
-                    : "bg-white text-gray-700 hover:bg-gray-100"
-                }`}
+            <div className="flex items-center gap-3">
+              <Select
+                value={selectedDegree}
+                onValueChange={(v) => {
+                  setSelectedDegree(v as DegreeType);
+                  setSelectedProgramOption(null);
+                }}
               >
-                {category}
-              </Button>
-            ))}
+                <SelectTrigger className="w-36 rounded-full bg-blue-600 text-white px-4 py-2">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Plus2">+2</SelectItem>
+                  <SelectItem value="Bachelor">Bachelor</SelectItem>
+                  <SelectItem value="Master">Master</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select
+                value={selectedProgramOption ?? ""}
+                onValueChange={(v) => setSelectedProgramOption(v || null)}
+              >
+                <SelectTrigger className="w-48">
+                  <SelectValue
+                    placeholder={
+                      selectedDegree === "Plus2"
+                        ? "Select Stream"
+                        : "Select Program"
+                    }
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  {(programOptions[selectedDegree] || []).map((opt) => (
+                    <SelectItem key={opt} value={opt}>
+                      {opt}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            
 
             {filteredColleges.length > 0 && (
               <Button

@@ -104,11 +104,9 @@ const HeroSection = forwardRef<HTMLDivElement>((props, ref) => {
 
           {/* Main Content */}
           <div className="relative z-20 text-center max-w-4xl mx-auto p-8 animate-fade-in-up">
-            <h1 className="text-6xl lg:text-4xl md:text-3xl sm:text-2xl leading-tight font-extrabold mb-6 text-white text-shadow-strong letter-spacing-tight">
-              Find Your Perfect{" "}
-              <span className="bg-linear-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
-                College
-              </span>
+            <h1 className="text-6xl lg:text-6xl md:text-4xl sm:text-2xl leading-tight font-extrabold mb-6 text-white text-shadow-strong letter-spacing-tight">
+              Find Your Perfect College
+              
             </h1>
 
             <p className="text-xl md:text-lg text-white/95 mb-10 max-w-2xl mx-auto text-shadow-medium font-normal leading-relaxed">

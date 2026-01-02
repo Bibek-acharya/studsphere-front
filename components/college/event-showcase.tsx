@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Calendar, MapPin, TrendingUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
+import { useState, useEffect } from "react";
+import { Calendar, MapPin, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 interface Event {
   id: number;
@@ -18,37 +18,40 @@ interface Event {
 const events: Event[] = [
   {
     id: 1,
-    title: 'Learn today, lead tomorrow — your AI journey starts here!',
-    date: 'Sat,15 Nov',
-    location: 'Sallaghari,Bhaktpur',
-    image: 'https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    title: "Learn today, lead tomorrow — your AI journey starts here!",
+    date: "Sat,15 Nov",
+    location: "Sallaghari,Bhaktpur",
+    image:
+      "https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?auto=compress&cs=tinysrgb&w=1200",
     interested: 100,
     trending: true,
   },
   {
     id: 2,
-    title: 'Master the Future of Technology with AI & ML',
-    date: 'Mon,18 Nov',
-    location: 'Kathmandu,Nepal',
-    image: 'https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    title: "Master the Future of Technology with AI & ML",
+    date: "Mon,18 Nov",
+    location: "Kathmandu,Nepal",
+    image:
+      "https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1200",
     interested: 150,
     trending: true,
   },
   {
     id: 3,
-    title: 'Build Your Career in Data Science',
-    date: 'Wed,20 Nov',
-    location: 'Pokhara,Nepal',
-    image: 'https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    title: "Build Your Career in Data Science",
+    date: "Wed,20 Nov",
+    location: "Pokhara,Nepal",
+    image:
+      "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=1200",
     interested: 200,
     trending: false,
   },
 ];
 
 const avatars = [
-  'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100',
-  'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=100',
-  'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100',
+  "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100",
+  "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=100",
+  "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100",
 ];
 
 export default function EventShowcase() {
@@ -74,16 +77,16 @@ export default function EventShowcase() {
   }, [currentIndex]);
 
   return (
-    <div className="w-full min-h-screen bg-white p-8 flex items-center justify-center">
-      <div className="max-w-6xl w-full rounded-3xl p-8 bg-white relative overflow-hidden">
+    <div className="w-full min-h-screen bg-white p-20">
+      <div className="w-full rounded-3xl p-1 bg-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96rounded-full  z-0" />
         <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl opacity-30 z-0" />
 
-        <div className="relative z-10 grid lg:grid-cols-[1.5fr_1fr] gap-12 items-center">
+        <div className="relative z-10 grid lg:grid-cols-[3fr_1fr] gap-6 items-start">
           {/* Left Side - Event Image */}
           <div className="relative group">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-blue-200 bg-linear-to-br from-blue-100 to-cyan-100 p-2">
-              <div className="relative rounded-2xl overflow-hidden aspect-4/3 bg-black">
+            <div className="relative rounded-3xl overflow-hidden shadow-2linear-to-br from-blue-100 to-cyan-100 p-2">
+              <div className="relative rounded-2xl overflow-hidden aspect-4/3 bg-black max-h-120">
                 <Image
                   src={currentEvent.image}
                   alt={currentEvent.title}
@@ -96,9 +99,9 @@ export default function EventShowcase() {
           </div>
 
           {/* Right Side - Event Details */}
-          <div className="space-y-6">
+          <div className="text-left">
             {currentEvent.trending && (
-              <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-full border border-green-200">
+              <div className="inline-flex items-start gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-full border border-green-200">
                 <TrendingUp className="w-4 h-4" />
                 <span className="font-medium">Trending</span>
               </div>
@@ -159,8 +162,8 @@ export default function EventShowcase() {
               onClick={() => goToSlide(index)}
               className={`transition-all rounded-full ${
                 index === currentIndex
-                  ? 'bg-blue-600 w-12 h-3'
-                  : 'bg-blue-200 w-3 h-3 hover:bg-blue-300'
+                  ? "bg-blue-600 w-12 h-3"
+                  : "bg-blue-200 w-3 h-3 hover:bg-blue-300"
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />

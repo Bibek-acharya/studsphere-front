@@ -1,4 +1,4 @@
-import { FeatureCard } from "./feature-card"
+import { FeatureCard } from "./feature-card";
 
 const features = [
   {
@@ -7,8 +7,15 @@ const features = [
     description: "& Opportunities.",
     imageSrc: "/uni-card.png",
     imageAlt: "University & Schools",
-    buttons: ["College Finder", "College Finder", "College Finder", "College Finder", "College Finder"],
+    buttons: [
+      "College Finder",
+      "Course Finder",
+      "College Ranking",
+      "Scholarship Finder",
+      "University Reviews",
+    ],
     gradient: "bg-linear-to-br from-emerald-400 to-emerald-500",
+    link: "/colleges",
   },
   {
     title: "For Jobs & Internships",
@@ -16,19 +23,33 @@ const features = [
     description: "& Internship.",
     imageSrc: "/jobs-card.png",
     imageAlt: "Jobs & Internships",
-    buttons: ["Job Finder", "Internships", "Career Guide", "Resume Builder", "Interview Prep"],
+    buttons: [
+      "Job Finder",
+      "Internships",
+      "Career Guide",
+      "Resume Builder",
+      "Interview Prep",
+    ],
     gradient: "bg-linear-to-br from-orange-400 to-orange-500",
+    link: "/jobs",
   },
   {
-    title: "For Events & Activities",
-    subtitle: "Discover Campus Events",
+    title: "For the Scholarships",
+    subtitle: "Unlock Your Potential",
     description: "& Activities.",
     imageSrc: "/events-card.png",
     imageAlt: "Events & Activities",
-    buttons: ["Campus Events", "Workshops", "Webinars", "Competitions", "Networking"],
+    buttons: [
+      "Scholarship Finder",
+      "Merit Based Scholarships",
+      "College Scholarships",
+      "Competitions",
+      "Networking",
+    ],
     gradient: "bg-linear-to-br from-blue-400 to-blue-500",
+    link: "/events",
   },
-]
+];
 
 export function FeaturesSection() {
   return (
@@ -49,5 +70,5 @@ export function FeaturesSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
